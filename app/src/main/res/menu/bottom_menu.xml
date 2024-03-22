@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Home"
+        android:id="@+id/bottomHome"
+        android:icon="@drawable/ic_home" />
+
+    <item
+        android:title="Search"
+        android:id="@+id/bottomSearch"
+        android:icon="@drawable/ic_search" />
+
+    <item
+        android:title="Downloads"
+        android:id="@+id/bottomDownloads"
+        android:icon="@drawable/ic_download" />
+
+    <item
+        android:title="User"
+        android:id="@+id/bottomUser"
+        android:icon="@drawable/ic_user" />
+</menu>
