@@ -15,12 +15,12 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val movieList = findViewById<RecyclerView>(R.id.rm_movies_list)
-
-        movieList.layoutManager = LinearLayoutManager(this)
-        movieList.setHasFixedSize(true)
-        getMovieData { movies: List<Movie> -> movieList.adapter = MovieAdapter(movies) }
+        setContentView(R.layout.login_form)
+//        val movieList = findViewById<RecyclerView>(R.id.rm_movies_list)
+//
+//        movieList.layoutManager = LinearLayoutManager(this)
+//        movieList.setHasFixedSize(true)
+//        getMovieData { movies: List<Movie> -> movieList.adapter = MovieAdapter(movies) }
     }
 
 
