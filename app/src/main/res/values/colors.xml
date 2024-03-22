@@ -5,4 +5,5 @@
     <color name="white">#FFFFFF</color>
     <color name="btnPrimary">#3b71ca</color>
     <color name="bgImg">#080a52</color>
+    <color name="bgbottomNav">#2b225b</color>
 </resources>
