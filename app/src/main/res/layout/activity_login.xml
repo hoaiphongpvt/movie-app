@@ -77,7 +77,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:padding="10dp"
-
+                android:inputType="textPassword"
                 />
 
         </LinearLayout>
