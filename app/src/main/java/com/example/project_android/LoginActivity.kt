@@ -24,7 +24,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnSignup.setOnClickListener {
-            Toast.makeText(this, "Đi đến trang sign up", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Going to the registration page...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
         }
     }
 }
