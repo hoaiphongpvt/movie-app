@@ -17,6 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bottomNav = findViewById(R.id.bottomNav)
 
+        //Set Fragment mặc định khi vào activity
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frame, HomeFragment())
+                .commit()
+        }
+
         bottomNav.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.bottomHome -> {
