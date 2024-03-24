@@ -55,24 +55,50 @@ class HomeFragment : Fragment() {
 
     private fun setupMovieList() {
         val movieList = requireView().findViewById<RecyclerView>(R.id.rm_movies_list)
-        movieList.layoutManager = LinearLayoutManager(requireContext())
+        val movieListUpcoming = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_upcoming)
+        val movieListTopRated = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_toprated)
+
+        movieList.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         movieList.setHasFixedSize(true)
-        getMovieData { movies: List<Movie> ->
+        movieListUpcoming.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        movieListUpcoming.setHasFixedSize(true)
+        movieListTopRated.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        movieListTopRated.setHasFixedSize(true)
+
+        getMovieData("popular") { movies: List<Movie> ->
             movieList.adapter = MovieAdapter(movies)
+        }
+
+        getMovieData("upcoming") { movies: List<Movie> ->
+            movieListUpcoming.adapter = MovieAdapter(movies)
+        }
+
+        getMovieData("topRated") { movies: List<Movie> ->
+            movieListTopRated.adapter = MovieAdapter(movies)
         }
     }
 
-    private fun getMovieData(callback: (List<Movie>) -> Unit) {
+    private fun getMovieData(type: String, callback: (List<Movie>) -> Unit) {
         val apiService = MovieApiServices.getInstance().create(MovieApiInterface::class.java)
-        apiService.getMovieList().enqueue(object : Callback<MovieRespone> {
+        val call: Call<MovieRespone> = when (type) {
+            "popular" -> apiService.getPopularMovieList()
+            "upcoming" -> apiService.getUpcomingMovieList()
+            "topRated" -> apiService.getTopRatedMovieList()
+            // Thêm các trường hợp khác nếu cần
+            else -> apiService.getPopularMovieList() // Mặc định lấy dữ liệu phim phổ biến nếu không xác định được loại
+        }
+        call.enqueue(object : Callback<MovieRespone> {
             override fun onResponse(call: Call<MovieRespone>, response: Response<MovieRespone>) {
-                return callback(response.body()!!.movie)
+                if (response.isSuccessful) {
+                    callback(response.body()?.movie ?: emptyList())
+                } else {
+                    // Xử lý khi lấy dữ liệu thất bại
+                }
             }
 
             override fun onFailure(call: Call<MovieRespone>, t: Throwable) {
-
+                // Xử lý khi gọi API thất bại
             }
-
         })
     }
 
