@@ -14,13 +14,13 @@ class MovieAdapter (
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val IMG_BASE = "https://image.tmdb.org/t/p/w500/"
-        private val movieTitle: TextView = view.findViewById(R.id.movie_title)
-        private val releaseDate: TextView = view.findViewById(R.id.movie_release_date)
+//        private val movieTitle: TextView = view.findViewById(R.id.movie_title)
+//        private val releaseDate: TextView = view.findViewById(R.id.movie_release_date)
         private val movieImg: ImageView = view.findViewById((R.id.imageView))
 
         fun bindMovie(movie: Movie) {
-            movieTitle.text = movie.title
-            releaseDate.text = movie.release
+//            movieTitle.text = movie.title
+//            releaseDate.text = movie.release
             Glide.with(movieImg).load(IMG_BASE + movie.poster_path).into(movieImg)
         }
     }
