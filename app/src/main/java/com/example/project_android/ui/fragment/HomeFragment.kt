@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import com.example.project_android.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_android.MovieAdapter
-import com.example.project_android.models.Movie
-import com.example.project_android.models.MovieRespone
+import com.example.project_android.adapters.MovieAdapter
+import com.example.project_android.models.entity.Movie
+import com.example.project_android.models.network.MovieRespone
 import com.example.project_android.services.MovieApiInterface
 import com.example.project_android.services.MovieApiServices
 import retrofit2.Call

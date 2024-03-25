@@ -16,7 +16,7 @@
         android:layout_width="500px"
         android:layout_height="700px"
         android:background="@color/dark_grey"
-        tools:context=".MainActivity">
+        tools:context=".ui.activity.MainActivity">
 
             <ImageView
                 android:id="@+id/imageView"
