@@ -1,6 +1,7 @@
-package com.example.project_android.models
+package com.example.project_android.models.network
 
 import android.os.Parcelable
+import com.example.project_android.models.entity.Movie
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
