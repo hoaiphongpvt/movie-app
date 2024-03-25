@@ -1,6 +1,6 @@
 package com.example.project_android.services
 
-import com.example.project_android.models.MovieRespone
+import com.example.project_android.models.network.MovieRespone
 import retrofit2.Call
 import retrofit2.http.GET
 

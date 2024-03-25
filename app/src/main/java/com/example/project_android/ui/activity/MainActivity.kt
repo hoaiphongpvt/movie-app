@@ -1,7 +1,8 @@
-package com.example.project_android
+package com.example.project_android.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.project_android.R
 import com.example.project_android.ui.fragment.DownloadsFragment
 import com.example.project_android.ui.fragment.HomeFragment
 import com.example.project_android.ui.fragment.SearchFragment
