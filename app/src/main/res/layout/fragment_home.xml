@@ -14,7 +14,7 @@
         android:background="@color/background">
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="729dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -27,13 +27,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/rm_movies_list_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"/>
+
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Popular Movies"
+                    android:text="Popular"
                     android:textSize="22sp"
                     android:textColor="@color/white" />
 
@@ -49,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Upcoming Movies"
+                    android:text="Upcoming"
                     android:textSize="22sp"
                     android:textColor="@color/white" />
 

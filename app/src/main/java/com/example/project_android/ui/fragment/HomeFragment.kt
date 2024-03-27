@@ -1,6 +1,7 @@
 package com.example.project_android.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import com.example.project_android.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.example.project_android.adapters.MovieAdapter
+import com.example.project_android.adapters.MovieBannerAutoScroll
 import com.example.project_android.models.entity.Movie
 import com.example.project_android.models.network.MovieRespone
 import com.example.project_android.services.MovieApiInterface
@@ -16,6 +19,8 @@ import com.example.project_android.services.MovieApiServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Timer
+import java.util.TimerTask
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +62,7 @@ class HomeFragment : Fragment() {
         val movieList = requireView().findViewById<RecyclerView>(R.id.rm_movies_list)
         val movieListUpcoming = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_upcoming)
         val movieListTopRated = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_toprated)
+        val viewPager = requireView().findViewById<ViewPager>(R.id.rm_movies_list_banner)
 
         movieList.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         movieList.setHasFixedSize(true)
@@ -76,6 +82,26 @@ class HomeFragment : Fragment() {
         getMovieData("topRated") { movies: List<Movie> ->
             movieListTopRated.adapter = MovieAdapter(movies)
         }
+
+        getMovieData("trending") { movies: List<Movie> ->
+            viewPager.adapter = MovieBannerAutoScroll(movies, requireContext())
+            // Tự động trượt các item sau một khoảng thời gian
+            val handler = Handler()
+            val update = Runnable {
+                if (viewPager.currentItem == movies.size - 1) {
+                    viewPager.currentItem = 0
+                } else {
+                    viewPager.currentItem = viewPager.currentItem + 1
+                }
+            }
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    handler.post(update)
+                }
+            }, 1000, 4000)
+        }
+
+
     }
 
     private fun getMovieData(type: String, callback: (List<Movie>) -> Unit) {
@@ -84,6 +110,7 @@ class HomeFragment : Fragment() {
             "popular" -> apiService.getPopularMovieList()
             "upcoming" -> apiService.getUpcomingMovieList()
             "topRated" -> apiService.getTopRatedMovieList()
+            "trending" -> apiService.getTrendingMovieList()
             // Thêm các trường hợp khác nếu cần
             else -> apiService.getPopularMovieList() // Mặc định lấy dữ liệu phim phổ biến nếu không xác định được loại
         }
