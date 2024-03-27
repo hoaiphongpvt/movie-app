@@ -16,4 +16,12 @@ interface MovieApiInterface {
     //GET Top Rated Movies
     @GET("/3/movie/top_rated?api_key=34ebeebee5dd3b001abf3ba575de0218")
     fun getTopRatedMovieList() :Call<MovieRespone>
+
+    //Get Now Playing Movies
+    @GET("3/movie/now_playing?api_key=34ebeebee5dd3b001abf3ba575de0218")
+    fun getNowPlayingMovieList() :Call<MovieRespone>
+
+    //Get Trending Movies
+    @GET("3/trending/movie/day?api_key=34ebeebee5dd3b001abf3ba575de0218")
+    fun getTrendingMovieList() :Call<MovieRespone>
 }
