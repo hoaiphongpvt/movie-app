@@ -1,4 +1,4 @@
-package com.example.project_android.adapters
+package com.example.project_android.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.project_android.R
-import com.example.project_android.models.entity.Movie
+import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.utils.convertDateFormat
 
 class MovieBannerAutoScroll(

@@ -1,4 +1,4 @@
-package com.example.project_android.models.entity
+package com.example.project_android.data.models.entity
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
