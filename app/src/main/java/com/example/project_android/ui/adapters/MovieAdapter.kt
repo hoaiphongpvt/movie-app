@@ -1,4 +1,4 @@
-package com.example.project_android.adapters
+package com.example.project_android.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_android.R
-import com.example.project_android.models.entity.Movie
+import com.example.project_android.data.models.entity.Movie
 
 class MovieAdapter (
     private val movies: List<Movie>

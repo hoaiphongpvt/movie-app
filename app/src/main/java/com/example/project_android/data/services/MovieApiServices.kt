@@ -1,4 +1,4 @@
-package com.example.project_android.services
+package com.example.project_android.data.services
 
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import retrofit2.Retrofit
