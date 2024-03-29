@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pale_black"
+    tools:context=".ui.activity.MovieDetailsActivity">
+
+    <ImageView
+        android:id="@+id/movie_background"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:contentDescription="Movie_Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo_movie"/>
+
+    <ProgressBar
+        android:id="@+id/movieImageProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="20dp"
+        android:layout_height="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/movie_background"
+        app:layout_constraintEnd_toEndOf="@id/movie_background"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/movie_background"
+        app:layout_constraintTop_toTopOf="@id/movie_background"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/fadeView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/gradient_overlay"
+        app:layout_constraintBottom_toBottomOf="@id/movie_background" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintTop_toBottomOf="@id/movie_background">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/infoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/movieTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Titile"
+                        android:textSize="36sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/subInfoLayout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Title" />
+
+                    <TextView
+                        android:id="@+id/genresText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="@id/movieTitle"
+                        app:layout_constraintRight_toLeftOf="@id/subInfoLayout"
+                        app:layout_constraintTop_toBottomOf="@id/movieTitle"
+                        tools:text="Thriller / Adventure / Action / Mystery" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:numStars="5"
+                        android:stepSize=".5"
+                        app:bind_rating_stars="@{5}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/genresText"
+                        tools:rating="4" />
+
+                    <TextView
+                        android:id="@+id/numOfVotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                        app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                        app:layout_constraintTop_toTopOf="@id/ratingBar"
+                        tools:text="189 votes" />
+
+                    <LinearLayout
+                        android:id="@+id/subInfoLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:orientation="vertical"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/episodeImage"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_baseline_event_24" />
+
+                            <TextView
+                                android:id="@+id/episodeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:textSize="12sp"
+                                app:bind_date_text="@{viewmodel.movie.releaseDate}"
+                                app:layout_constraintBottom_toBottomOf="@id/episodeImage"
+                                app:layout_constraintLeft_toRightOf="@id/episodeImage"
+                                app:layout_constraintTop_toTopOf="@id/episodeImage"
+                                tools:text="22 Oct 2017" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <ImageView
+                                android:id="@+id/seasonImage"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_baseline_access_time_24" />
+
+                            <TextView
+                                android:id="@+id/seasonText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="@id/seasonImage"
+                                app:layout_constraintLeft_toRightOf="@id/seasonImage"
+                                app:layout_constraintTop_toTopOf="@id/seasonImage"
+                                tools:text="2:15 / 135 min" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <ImageView
+                                android:id="@+id/airDateImage"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_baseline_languages_24" />
+
+                            <TextView
+                                android:id="@+id/airDateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:textSize="12sp"
+                                app:bind_language_code_text="@{viewmodel.movie.originalLanguage}"
+                                app:layout_constraintBottom_toBottomOf="@id/airDateImage"
+                                app:layout_constraintLeft_toRightOf="@id/airDateImage"
+                                app:layout_constraintTop_toTopOf="@id/airDateImage"
+                                tools:text="English" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/overviewText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:alpha=".7"
+                    tools:text="Trapped on the beach with their backs to the sea, British and Allied troops are surrounded by enemy forces." />
+
+                <TextView
+                    android:id="@+id/watchTrailerText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="VIDEOS"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/videosRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/castText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="CASTS"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/castRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
