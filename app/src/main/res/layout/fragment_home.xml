@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pale_black"
+    android:background="@color/black"
     tools:context=".ui.activity.MainActivity" >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_frame"
-        android:background="@color/background">
+        android:background="@color/black">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

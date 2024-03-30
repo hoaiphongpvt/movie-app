@@ -1,5 +1,6 @@
 package com.example.project_android.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -13,9 +14,10 @@ import androidx.viewpager.widget.ViewPager
 import com.example.project_android.ui.adapters.MovieAdapter
 import com.example.project_android.ui.adapters.MovieBannerAutoScroll
 import com.example.project_android.data.models.entity.Movie
-import com.example.project_android.data.models.network.MovieRespone
+import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.services.MovieApiInterface
 import com.example.project_android.data.services.MovieApiServices
+import com.example.project_android.ui.activity.MovieDetailsActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,19 +74,24 @@ class HomeFragment : Fragment() {
         movieListTopRated.setHasFixedSize(true)
 
         getMovieData("popular") { movies: List<Movie> ->
-            movieList.adapter = MovieAdapter(movies)
+            setupMovieAdapter(movieList, movies)
         }
 
         getMovieData("upcoming") { movies: List<Movie> ->
-            movieListUpcoming.adapter = MovieAdapter(movies)
+            setupMovieAdapter(movieListUpcoming, movies)
         }
 
         getMovieData("topRated") { movies: List<Movie> ->
-            movieListTopRated.adapter = MovieAdapter(movies)
+            setupMovieAdapter(movieListTopRated, movies)
         }
 
+
         getMovieData("trending") { movies: List<Movie> ->
-            viewPager.adapter = MovieBannerAutoScroll(movies, requireContext())
+            viewPager.adapter = MovieBannerAutoScroll(movies, requireContext()) { movie ->
+                val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
+                intent.putExtra("movie", movie)
+                startActivity(intent)
+            }
             // Tự động trượt các item sau một khoảng thời gian
             val handler = Handler()
             val update = Runnable {
@@ -104,9 +111,17 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun setupMovieAdapter(recyclerView: RecyclerView, movies: List<Movie>) {
+        recyclerView.adapter = MovieAdapter(movies) { movie ->
+            val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
+            intent.putExtra("movie", movie)
+            startActivity(intent)
+        }
+    }
+
     private fun getMovieData(type: String, callback: (List<Movie>) -> Unit) {
         val apiService = MovieApiServices.getInstance().create(MovieApiInterface::class.java)
-        val call: Call<MovieRespone> = when (type) {
+        val call: Call<MovieResponse> = when (type) {
             "popular" -> apiService.getPopularMovieList()
             "upcoming" -> apiService.getUpcomingMovieList()
             "topRated" -> apiService.getTopRatedMovieList()
@@ -114,8 +129,8 @@ class HomeFragment : Fragment() {
             // Thêm các trường hợp khác nếu cần
             else -> apiService.getPopularMovieList() // Mặc định lấy dữ liệu phim phổ biến nếu không xác định được loại
         }
-        call.enqueue(object : Callback<MovieRespone> {
-            override fun onResponse(call: Call<MovieRespone>, response: Response<MovieRespone>) {
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     callback(response.body()?.movie ?: emptyList())
                 } else {
@@ -123,7 +138,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<MovieRespone>, t: Throwable) {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 // Xử lý khi gọi API thất bại
             }
         })

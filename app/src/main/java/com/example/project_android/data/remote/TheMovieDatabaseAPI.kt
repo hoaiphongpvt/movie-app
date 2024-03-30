@@ -5,10 +5,11 @@ object TheMovieDatabaseAPI {
     const val API_VERSION: Int = 3
     const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w185"
     const val BASE_BACKDROP_URL = "https://image.tmdb.org/t/p/w780"
+    const val BASE_IMG = "https://image.tmdb.org/t/p/w500/"
     const val BASE_PROFILE_URL = "https://image.tmdb.org/t/p/w185"
     const val BASE_YT_IMG_URL = "https://img.youtube.com/vi/"
     const val BASE_YT_WATCH_URL = "https://www.youtube.com/watch?v="
-    const val API_KEY = "34ebeebee5dd3b001abf3ba575de0218"
+    const val API_KEY : String = "34ebeebee5dd3b001abf3ba575de0218"
     const val BASE_API_URL = "https://api.themoviedb.org/"
     const val MAX_RATING = 10f
 

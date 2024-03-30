@@ -7,4 +7,6 @@
     <color name="bgImg">#080a52</color>
     <color name="background">#241c4f</color>
     <color name="bgBottomNav">#000000</color>
+    <color name="black">#000000</color>
+    <color name="starColor">#e85555</color>
 </resources>
