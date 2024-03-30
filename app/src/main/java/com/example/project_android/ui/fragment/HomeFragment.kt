@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import com.example.project_android.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.services.MovieApiInterface
 import com.example.project_android.data.services.MovieApiServices
 import com.example.project_android.ui.activity.MovieDetailsActivity
+import com.example.project_android.ui.activity.ShowAllActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,11 +62,40 @@ class HomeFragment : Fragment() {
         setupMovieList()
     }
 
+    private fun goToShowAll(type: String, movies: List<Movie>) {
+        val intent = Intent(requireContext(), ShowAllActivity::class.java)
+        intent.putExtra("type", type)
+        intent.putExtra("movies", ArrayList(movies))
+        startActivity(intent)
+    }
+
     private fun setupMovieList() {
         val movieList = requireView().findViewById<RecyclerView>(R.id.rm_movies_list)
         val movieListUpcoming = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_upcoming)
         val movieListTopRated = requireView().findViewById<RecyclerView>(R.id.rm_movies_list_toprated)
         val viewPager = requireView().findViewById<ViewPager>(R.id.rm_movies_list_banner)
+
+        val btnShowAllPopular : ImageButton = requireView().findViewById(R.id.showAllPopular)
+        val btnShowAllUpcoming : ImageButton = requireView().findViewById(R.id.showAllUpcoming)
+        val btnShowAllTopRated : ImageButton = requireView().findViewById(R.id.showAllTopRated)
+
+        btnShowAllPopular.setOnClickListener {
+            getMovieData("popular") { movies ->
+                goToShowAll("popular", movies)
+            }
+        }
+
+        btnShowAllUpcoming.setOnClickListener {
+            getMovieData("upcoming") { movies ->
+                goToShowAll("upcoming", movies)
+            }
+        }
+
+        btnShowAllTopRated.setOnClickListener {
+            getMovieData("topRated") { movies ->
+                goToShowAll("topRated", movies)
+            }
+        }
 
         movieList.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         movieList.setHasFixedSize(true)

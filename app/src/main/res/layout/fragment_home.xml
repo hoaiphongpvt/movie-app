@@ -32,15 +32,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="230dp"/>
 
-                <TextView
-                    android:id="@+id/textView2"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Popular"
-                    android:textSize="22sp"
-                    android:textColor="@color/white" />
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/txtPopular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Popular"
+                        android:textSize="22sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/showAllPopular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_showall_24"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rm_movies_list"
@@ -48,15 +69,37 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" />
 
-                <TextView
-                    android:id="@+id/textView3"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Upcoming"
-                    android:textSize="22sp"
-                    android:textColor="@color/white" />
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/txtUpcoming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Upcoming"
+                        android:textSize="22sp"
+                        android:textColor="@color/white" />
+
+                    <ImageButton
+                        android:id="@+id/showAllUpcoming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_showall_24"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rm_movies_list_upcoming"
@@ -64,15 +107,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" />
 
-                <TextView
-                    android:id="@+id/textView4"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Top Rated"
-                    android:textSize="22sp"
-                    android:textColor="@color/white" />
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/txtTopRated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Top Rated"
+                        android:textSize="22sp"
+                        android:textColor="@color/white" />
+
+                    <ImageButton
+                        android:id="@+id/showAllTopRated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_showall_24"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rm_movies_list_toprated"

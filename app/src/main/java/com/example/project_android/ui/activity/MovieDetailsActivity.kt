@@ -47,7 +47,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                     titlePage.text = movieDetails.title
                     movieTitle.text = movieDetails.title
                     genreText.text = movieDetails.genres?.map { it.name }?.joinToString(" / ")
-                    Glide.with(movieBackground).load(BASE_IMG + movieDetails.backdropPath).into(movieBackground )
+                    Glide.with(movieBackground).load(BASE_IMG + movieDetails.backdropPath).into(movieBackground)
                     rating.rating = movieDetails.voteAverage / 2
                     numOfVotes.text = movieDetails.voteCount.toString() + " votes"
                     episodeText.text = movieDetails.releaseDate?.convertDateFormat()
