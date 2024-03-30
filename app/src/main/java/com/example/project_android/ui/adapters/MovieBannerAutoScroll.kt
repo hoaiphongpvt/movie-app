@@ -10,12 +10,14 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import com.example.project_android.utils.convertDateFormat
 
 class MovieBannerAutoScroll(
     private val movies: List<Movie>,
     private val context: Context,
-    private val IMG_BASE: String = "https://image.tmdb.org/t/p/w500/"
+    private val BASE_IMG: String = TheMovieDatabaseAPI.BASE_IMG,
+    private val itemClickListener: (Movie) -> Unit
 ) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -29,9 +31,13 @@ class MovieBannerAutoScroll(
         val movieImg: ImageView = view.findViewById(R.id.image)
 
         movieTitle.text = movie.title
-        movieReleaseDate.text = movie.release.convertDateFormat()
-        voteCount.text = "${movie.vote_count} votes"
-        Glide.with(context).load(IMG_BASE + movie.backdrop_path).into(movieImg)
+        movieReleaseDate.text = movie.releaseDate?.convertDateFormat()
+        voteCount.text = "${movie.voteCount} votes"
+        Glide.with(context).load(BASE_IMG + movie.backdropPath).into(movieImg)
+
+        view.setOnClickListener {
+            itemClickListener(movie)
+        }
 
         container.addView(view)
 

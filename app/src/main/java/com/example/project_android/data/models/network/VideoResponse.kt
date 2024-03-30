@@ -1,14 +1,14 @@
 package com.example.project_android.data.models.network
 
 import android.os.Parcelable
-import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.entity.Video
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MovieRespone (
+data class VideoResponse(
     @SerializedName("results")
-    val movie : List<Movie>
-) : Parcelable {
+     var results: List<Video>
+): Parcelable {
     constructor() : this(mutableListOf())
 }
