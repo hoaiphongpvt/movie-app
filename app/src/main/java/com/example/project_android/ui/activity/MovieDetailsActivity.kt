@@ -2,6 +2,7 @@ package com.example.project_android.ui.activity
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
@@ -81,7 +82,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
     private fun setupCastAdapter(recyclerView: RecyclerView, casts: List<Cast>) {
-        recyclerView.adapter = CastAdapter(casts)
+        recyclerView.adapter = CastAdapter(casts) { cast ->
+            val intent = Intent(this, CastDetailsActivity::class.java)
+            intent.putExtra("cast", cast)
+            startActivity(intent)
+        }
     }
 
     private fun setupVideoAdapter(recyclerView: RecyclerView, videos: List<Video>) {

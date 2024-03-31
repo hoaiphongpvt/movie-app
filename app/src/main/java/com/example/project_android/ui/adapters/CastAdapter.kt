@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Cast
+import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 
 class CastAdapter (
-    private val casts: List<Cast>
+    private val casts: List<Cast>,
+    private val onItemClick: (Cast) -> Unit
     ) : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
         class CastViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -32,6 +34,9 @@ class CastAdapter (
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
         holder.bindMovie((casts.get(position)))
+        holder.itemView.setOnClickListener {
+            onItemClick(casts.get(position))
+        }
     }
 
     override fun getItemCount(): Int = casts.size
