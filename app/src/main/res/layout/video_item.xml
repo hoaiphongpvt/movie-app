@@ -7,7 +7,7 @@
     android:layout_marginEnd="14dp">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/thumbnail"
             android:layout_width="162dp"
             android:layout_height="108dp"
             android:contentDescription="Video"

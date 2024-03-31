@@ -1,7 +1,9 @@
 package com.example.project_android.data.services
 
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
+import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import retrofit2.Call
 import retrofit2.http.GET
@@ -31,4 +33,11 @@ interface MovieApiInterface {
     //Get Movie Details
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getMovieDetails(@Path("movie_id") id: String): Call<Movie>
+
+    //Get List Casts
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/credits?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getListCasts(@Path("movie_id") id: String) : Call<CastResponse>
+
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/videos?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getListVideos(@Path("movie_id") id: String) : Call<VideoResponse>
 }
