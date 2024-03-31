@@ -48,7 +48,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -213,6 +213,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:textAlignment="textStart"
                     android:textColor="@color/white"
                     android:alpha=".7"
                     tools:text="Trapped on the beach with their backs to the sea, British and Allied troops are surrounded by enemy forces." />
@@ -259,8 +260,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
 
             </LinearLayout>
         </ScrollView>

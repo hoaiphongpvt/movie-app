@@ -17,7 +17,7 @@ import com.example.project_android.ui.adapters.MovieBannerAutoScroll
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.services.MovieApiInterface
-import com.example.project_android.data.services.MovieApiServices
+import com.example.project_android.data.services.ApiServices
 import com.example.project_android.ui.activity.MovieDetailsActivity
 import com.example.project_android.ui.activity.ShowAllActivity
 import retrofit2.Call
@@ -151,7 +151,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMovieData(type: String, callback: (List<Movie>) -> Unit) {
-        val apiService = MovieApiServices.getInstance().create(MovieApiInterface::class.java)
+        val apiService = ApiServices.getInstance().create(MovieApiInterface::class.java)
         val call: Call<MovieResponse> = when (type) {
             "popular" -> apiService.getPopularMovieList()
             "upcoming" -> apiService.getUpcomingMovieList()

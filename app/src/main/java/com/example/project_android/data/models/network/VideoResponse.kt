@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VideoResponse(
     @SerializedName("results")
-     var results: List<Video>
+     var video: List<Video>
 ): Parcelable {
     constructor() : this(mutableListOf())
 }

@@ -16,13 +16,10 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val BASE_IMG = TheMovieDatabaseAPI.BASE_IMG
-//        private val movieTitle: TextView = view.findViewById(R.id.movie_title)
-//        private val releaseDate: TextView = view.findViewById(R.id.movie_release_date)
+
         private val movieImg: ImageView = view.findViewById((R.id.imageView))
 
         fun bindMovie(movie: Movie) {
-//            movieTitle.text = movie.title
-//            releaseDate.text = movie.release
             Glide.with(movieImg).load(BASE_IMG + movie.posterPath).into(movieImg)
         }
     }
