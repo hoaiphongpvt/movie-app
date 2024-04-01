@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface AuthenAPIInterface {
+interface AuthenApiInterface {
 
     //Check API Key
     @GET("${ TheMovieDatabaseAPI.API_VERSION}/authentication")

@@ -22,7 +22,7 @@ class CastAdapter (
             private val castImg: ImageView = view.findViewById((R.id.castImage))
             private val castName: TextView = view.findViewById(R.id.castName)
 
-            fun bindMovie(cast: Cast) {
+            fun bindCast(cast: Cast) {
                 castName.text = cast.name
                 Glide.with(castImg).load(BASE_IMG + cast.profilePath).into(castImg)
             }
@@ -33,7 +33,7 @@ class CastAdapter (
         }
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
-        holder.bindMovie((casts.get(position)))
+        holder.bindCast((casts.get(position)))
         holder.itemView.setOnClickListener {
             onItemClick(casts.get(position))
         }

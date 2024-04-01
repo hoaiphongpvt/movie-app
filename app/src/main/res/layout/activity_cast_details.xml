@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="35dp">
+        android:layout_marginTop="14dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/userImageCardView"
@@ -32,7 +32,7 @@
             app:strokeWidth="2dp">
 
             <ImageView
-                android:id="@+id/userImage"
+                android:id="@+id/personImage"
                 android:layout_width="175dp"
                 android:layout_height="175dp"
                 android:layout_margin="0dp"
@@ -50,17 +50,20 @@
         android:layout_marginTop="20dp"
         android:padding="8dp">
         <TextView
-            android:id="@+id/nameText"
+            android:id="@+id/personName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="36sp" />
 
         <TextView
+            android:id="@+id/knownForDepartment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Acting"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -92,7 +95,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/biographyText"
+                        android:id="@+id/personBiography"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.project_android.data.models.entity.BaseResponse
 import com.example.project_android.data.services.ApiServices
-import com.example.project_android.data.services.AuthenAPIInterface
+import com.example.project_android.data.services.AuthenApiInterface
 import com.example.project_android.ui.activity.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +16,7 @@ class LoginViewModel(private val context: Context) : ViewModel(){
 
     fun login(apiKey: String) {
 
-        val apiService = ApiServices.getInstance().create(AuthenAPIInterface::class.java)
+        val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
         val call : Call<BaseResponse> = apiService.checkAPIKey(apiKey)
 
         call.enqueue(object : Callback<BaseResponse> {

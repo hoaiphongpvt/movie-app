@@ -18,7 +18,7 @@ class VideoAdapter (
         private val BASE_YT_IMG_URL = TheMovieDatabaseAPI.BASE_YT_IMG_URL
         private val thumbnail: ImageView = view.findViewById((R.id.thumbnail))
 
-        fun bindMovie(video: Video) {
+        fun bindVideo(video: Video) {
             Glide.with(thumbnail).load(BASE_YT_IMG_URL + video.key + "/hqdefault.jpg").into(thumbnail)
         }
     }
@@ -28,7 +28,7 @@ class VideoAdapter (
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        holder.bindMovie((videos.get(position)))
+        holder.bindVideo((videos.get(position)))
     }
 
     override fun getItemCount(): Int = videos.size
