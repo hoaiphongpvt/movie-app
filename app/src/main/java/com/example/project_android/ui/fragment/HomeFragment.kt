@@ -145,7 +145,7 @@ class HomeFragment : Fragment() {
     private fun setupMovieAdapter(recyclerView: RecyclerView, movies: List<Movie>) {
         recyclerView.adapter = MovieAdapter(movies) { movie ->
             val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-            intent.putExtra("movie", movie)
+            intent.putExtra("movieID", movie.id.toString())
             startActivity(intent)
         }
     }

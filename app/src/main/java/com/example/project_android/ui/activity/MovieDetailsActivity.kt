@@ -58,10 +58,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         castRecyclerView = findViewById(R.id.castRecyclerView)
         videoRecyclerView = findViewById(R.id.videosRecyclerView)
 
-        val movie = intent.getParcelableExtra<Movie>("movie")
+        val movieID = intent.getStringExtra("movieID")
 
-        if (movie != null) {
-            movieDetailsViewModel.getMovieDetailsData(movie.id.toString()) { movieDetails ->
+        if (movieID != null) {
+            movieDetailsViewModel.getMovieDetailsData(movieID) { movieDetails ->
                 if (movieDetails != null) {
                     titlePage.text = movieDetails.title
                     movieTitle.text = movieDetails.title
@@ -81,11 +81,11 @@ class MovieDetailsActivity : AppCompatActivity() {
                 }
             }
 
-            movieDetailsViewModel.getListCastsData(movie.id.toString()) { casts: List<Cast> ->
+            movieDetailsViewModel.getListCastsData(movieID) { casts: List<Cast> ->
                 setupCastAdapter(castRecyclerView, casts)
             }
 
-            movieDetailsViewModel.getListVideosData(movie.id.toString()) { videos: List<Video> ->
+            movieDetailsViewModel.getListVideosData(movieID) { videos: List<Video> ->
                 setupVideoAdapter(videoRecyclerView, videos)
             }
         }
@@ -93,7 +93,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private fun setupCastAdapter(recyclerView: RecyclerView, casts: List<Cast>) {
         recyclerView.adapter = CastAdapter(casts) { cast ->
             val intent = Intent(this, CastDetailsActivity::class.java)
-            intent.putExtra("cast", cast)
+            intent.putExtra("castID", cast.id.toString())
             startActivity(intent)
         }
     }
