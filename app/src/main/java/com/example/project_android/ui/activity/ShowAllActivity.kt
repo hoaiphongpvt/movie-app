@@ -48,7 +48,7 @@ class ShowAllActivity : AppCompatActivity() {
         // Khởi tạo Adapter và đặt dữ liệu vào RecyclerView
         movieAdapter = MovieAdapter(movies) { movie ->
             val intent = Intent(this, MovieDetailsActivity::class.java)
-            intent.putExtra("movie", movie)
+            intent.putExtra("movieID", movie.id.toString())
             startActivity(intent)
         }
         recyclerView.adapter = movieAdapter
