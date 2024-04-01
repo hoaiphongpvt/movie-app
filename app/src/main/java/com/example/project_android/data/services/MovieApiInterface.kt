@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface MovieApiInterface {
+
     //GET Popular Movies
     @GET("/${TheMovieDatabaseAPI.API_VERSION}/movie/popular?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getPopularMovieList() :Call<MovieResponse>
