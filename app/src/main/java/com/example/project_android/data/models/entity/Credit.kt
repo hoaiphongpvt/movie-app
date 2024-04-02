@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Credit (
     @SerializedName("id")
-    var id: Int? = null,
+    var id: String? = null,
 
     @SerializedName("media_type")
     var mediaType: String? = null,
