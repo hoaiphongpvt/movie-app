@@ -1,4 +1,4 @@
-package com.example.project_android.data.models.entity
+package com.example.project_android.data.models.network
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

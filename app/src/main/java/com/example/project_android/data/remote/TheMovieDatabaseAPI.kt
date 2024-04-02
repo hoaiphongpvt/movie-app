@@ -1,8 +1,4 @@
 package com.example.project_android.data.remote
-
-import android.content.Context
-import com.example.project_android.utils.getAPIKey
-
 object TheMovieDatabaseAPI {
     const val API_VERSION: Int = 3
     const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w185"

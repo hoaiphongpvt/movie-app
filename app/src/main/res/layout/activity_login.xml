@@ -43,10 +43,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="Enter Your API Key"/>
+                android:text="User name"/>
 
             <EditText
-                android:id="@+id/api_key"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
@@ -55,32 +55,32 @@
                 />
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_marginLeft="12dp"-->
-<!--            android:layout_marginRight="12dp"-->
-<!--            android:layout_marginTop="14dp"-->
-<!--            android:layout_marginBottom="14dp">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp">
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:text="Password"/>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Password"/>
 
-<!--            <EditText-->
-<!--                android:id="@+id/password"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:background="@drawable/rounded_corner"-->
-<!--                android:padding="10dp"-->
-<!--                android:inputType="textPassword"-->
-<!--                />-->
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                />
 
-<!--        </LinearLayout>-->
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnLogin"
@@ -108,7 +108,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:backgroundTint="@color/btnPrimary"
-            android:text="SIGN UP TO GET API KEY" />
+            android:text="SIGN UP" />
 
     </LinearLayout>
 

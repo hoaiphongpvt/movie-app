@@ -14,7 +14,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnLogin: Button
     private lateinit var btnSignup: Button
-    private lateinit var apiKey: EditText
+    private lateinit var username: EditText
+    private lateinit var password: EditText
     private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,16 +24,17 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin = findViewById(R.id.btnLogin)
         btnSignup = findViewById(R.id.btnSignup)
-        apiKey = findViewById(R.id.api_key)
+        username = findViewById(R.id.username)
+        password = findViewById(R.id.password)
 
         loginViewModel = LoginViewModel(this)
 
         btnLogin.setOnClickListener {
 
-            if (apiKey.text.isNotEmpty()) {
-                loginViewModel.login(apiKey.text.toString())
+            if (username.text.isNotEmpty() && password.text.isNotEmpty()) {
+                loginViewModel.login(username.text.toString(), password.text.toString())
             } else {
-                Toast.makeText(this, "Please enter your API KEY.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please enter username and password.", Toast.LENGTH_LONG).show()
             }
 
         }
