@@ -99,7 +99,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupVideoAdapter(recyclerView: RecyclerView, videos: List<Video>) {
-        recyclerView.adapter = VideoAdapter(videos)
+        recyclerView.adapter = VideoAdapter(videos) { video ->
+            val intent = Intent(this, VideoDetailsActivity::class.java)
+            intent.putExtra("video", video)
+            startActivity(intent)
+        }
     }
 
 
