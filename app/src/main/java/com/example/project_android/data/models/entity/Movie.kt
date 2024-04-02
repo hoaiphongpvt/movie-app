@@ -12,6 +12,9 @@ data class Movie (
     @SerializedName("title")
     val title: String? = null,
 
+    @SerializedName("key")
+    val key: String? = null,
+
     @SerializedName("overview")
     val overview: String? = null,
 
@@ -44,5 +47,6 @@ data class Movie (
 
     @SerializedName("genres")
     val genres: List<Genre>? = null
+
 
 ) : Parcelable
