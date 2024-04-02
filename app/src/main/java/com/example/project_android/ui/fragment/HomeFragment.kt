@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieData("trending") { movies: List<Movie> ->
             viewPager.adapter = MovieBannerAutoScroll(movies, requireContext()) { movie ->
                 val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-                intent.putExtra("movie", movie)
+                intent.putExtra("movieID", movie.id.toString())
                 startActivity(intent)
             }
             // Tự động trượt các item sau một khoảng thời gian
