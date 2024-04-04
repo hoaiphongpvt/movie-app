@@ -1,21 +1,19 @@
 package com.example.project_android.viewmodel
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.project_android.data.models.network.SessionResponse
 import com.example.project_android.data.models.network.TokenResponse
 import com.example.project_android.data.services.ApiServices
 import com.example.project_android.data.services.AuthenApiInterface
-import com.example.project_android.ui.activity.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val context: Context) : ViewModel(){
 
-    val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
+    private val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
     fun login(username: String, password: String, callback: (Boolean, String) -> Unit) {
         apiService.getRequestToken().enqueue(object : Callback<TokenResponse> {
             override fun onResponse(call: Call<TokenResponse>, response: Response<TokenResponse>) {

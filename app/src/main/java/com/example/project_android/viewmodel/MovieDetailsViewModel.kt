@@ -14,8 +14,8 @@ import retrofit2.Response
 
 class MovieDetailsViewModel : ViewModel() {
 
+    private  val apiService = ApiServices.getInstance().create(MovieApiInterface::class.java)
      fun getMovieDetailsData(movieID: String, callback: (Movie?) -> Unit) {
-        val apiService = ApiServices.getInstance().create(MovieApiInterface::class.java)
         val call: Call<Movie> = apiService.getMovieDetails(movieID)
 
         call.enqueue(object : Callback<Movie> {
@@ -35,7 +35,6 @@ class MovieDetailsViewModel : ViewModel() {
     }
 
      fun getListCastsData(movieID: String, callback: (List<Cast>) -> Unit) {
-        val apiService = ApiServices.getInstance().create(MovieApiInterface::class.java)
         val call: Call<CastResponse> = apiService.getListCasts(movieID)
 
         call.enqueue(object: Callback<CastResponse> {
@@ -53,7 +52,6 @@ class MovieDetailsViewModel : ViewModel() {
     }
 
      fun getListVideosData(movieID: String, callback: (List<Video>) -> Unit) {
-        val apiService = ApiServices.getInstance().create(MovieApiInterface::class.java)
         val call: Call<VideoResponse> = apiService.getListVideos(movieID)
 
         call.enqueue(object: Callback<VideoResponse> {
@@ -66,9 +64,6 @@ class MovieDetailsViewModel : ViewModel() {
             override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
-
         })
     }
-
 }

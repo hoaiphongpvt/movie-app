@@ -16,11 +16,11 @@ interface MovieApiInterface {
     fun getPopularMovieList() :Call<MovieResponse>
 
     //GET Upcoming Movies
-    @GET("/${TheMovieDatabaseAPI.API_VERSION}/movie/upcoming?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/upcoming?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getUpcomingMovieList() :Call<MovieResponse>
 
     //GET Top Rated Movies
-    @GET("/${TheMovieDatabaseAPI.API_VERSION}/movie/top_rated?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/top_rated?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getTopRatedMovieList() :Call<MovieResponse>
 
     //Get Now Playing Movies
