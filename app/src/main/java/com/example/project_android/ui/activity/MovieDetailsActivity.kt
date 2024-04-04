@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -101,7 +102,8 @@ class MovieDetailsActivity : AppCompatActivity() {
     private fun setupVideoAdapter(recyclerView: RecyclerView, videos: List<Video>) {
         recyclerView.adapter = VideoAdapter(videos) { video ->
             val intent = Intent(this, VideoDetailsActivity::class.java)
-            intent.putExtra("video", video)
+            intent.putExtra("videoName", video.name.toString())
+            intent.putExtra("videoKey", video.key.toString())
             startActivity(intent)
         }
     }
