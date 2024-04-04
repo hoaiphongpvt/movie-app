@@ -18,34 +18,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bottomNav = findViewById(R.id.bottomNav)
 
-        //Set Fragment mặc định khi vào activity
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frame, HomeFragment())
-                .commit()
+            val homeFragment = HomeFragment()
+            homeFragment.arguments = intent.extras
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, homeFragment).commit()
         }
 
         bottomNav.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.bottomHome -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commit()
-                    true // Trả về true để báo rằng sự kiện đã được xử lý
-                }
-                R.id.bottomSearch -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame, SearchFragment()).commit()
-                    true // Trả về true để báo rằng sự kiện đã được xử lý
-                }
-                R.id.bottomDownloads -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame, DownloadsFragment()).commit()
-                    true // Trả về true để báo rằng sự kiện đã được xử lý
-                }
-                R.id.bottomUser -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame, UserFragment()).commit()
-                    true // Trả về true để báo rằng sự kiện đã được xử lý
-                }
-                // Thêm các trường hợp cho các item khác nếu cần
-                else -> false
+            val fragment = when (menuItem.itemId) {
+                R.id.bottomSearch -> SearchFragment()
+                R.id.bottomDownloads -> DownloadsFragment()
+                R.id.bottomUser -> UserFragment()
+                else -> HomeFragment()
             }
+            fragment.arguments = intent.extras
+            supportFragmentManager.beginTransaction().replace(R.id.main_frame, fragment).commit()
+            true
         }
     }
 }
