@@ -11,14 +11,14 @@ import retrofit2.http.Path
 interface PersonApiInterface {
 
     //Get Person Details
-    @GET("/${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getPersonDetails(@Path("person_id") id: String) : Call<Person>
 
     //Get List Images Person
-    @GET("/${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}/images?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}/images?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getListImagesPerson(@Path("person_id") id: String) : Call<PersonImageResponse>
 
     //GET Combined Credits
-    @GET("/${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}/combined_credits?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/person/{person_id}/combined_credits?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getCombinedCredits(@Path("person_id") id: String) : Call<PersonCreditResponse>
 }

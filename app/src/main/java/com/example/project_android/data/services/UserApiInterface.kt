@@ -9,6 +9,6 @@ import retrofit2.http.Query
 
 interface UserApiInterface {
     //GET Account Details
-    @GET("${ TheMovieDatabaseAPI.API_VERSION}/account/{account_id}")
-    fun getAccountDetails(@Path("account_id") accountID : String, @Query("session_id") sessionID : String) : Call<User>
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/account/{account_id}?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getAccountDetails(@Path("account_id") accountID : Int, @Query("session_id") sessionID : String) : Call<User>
 }

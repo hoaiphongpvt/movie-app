@@ -18,7 +18,7 @@ import retrofit2.http.Query
 interface AuthenApiInterface {
 
     //Check API Key
-    @GET("${ TheMovieDatabaseAPI.API_VERSION}/authentication")
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/authentication")
     fun checkAPIKey(@Query("api_key") apiKey: String ) : Call<BaseResponse>
 
     //Get Request Token
