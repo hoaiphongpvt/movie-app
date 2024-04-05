@@ -23,14 +23,16 @@ class VideoDetailsActivity : AppCompatActivity() {
         titlePage = findViewById(R.id.video_title)
         btnBack = findViewById(R.id.backButton)
         titlePage.text = videoName
-        val frameVideo =
-            "<html><body><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/$videoKey\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
+
+        val frameVideo = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; border: none; } </style></head><body><iframe src=\"https://www.youtube.com/embed/$videoKey\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
+
         val displayYoutubeVideo = findViewById<View>(R.id.mWebView) as WebView
         displayYoutubeVideo.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 return false
             }
         }
+
         val webSettings = displayYoutubeVideo.settings
         webSettings.javaScriptEnabled = true
         displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8")
