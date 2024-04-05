@@ -7,11 +7,13 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_android.R
+import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Video
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 
-class VideoAdapter (
-    private val videos: List<Video>
+class VideoAdapter(
+    private val videos: List<Video>,
+    private val onItemClick: (Video) -> Unit
 ) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -29,6 +31,9 @@ class VideoAdapter (
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         holder.bindVideo((videos.get(position)))
+        holder.itemView.setOnClickListener {
+            onItemClick(videos.get(position))
+        }
     }
 
     override fun getItemCount(): Int = videos.size
