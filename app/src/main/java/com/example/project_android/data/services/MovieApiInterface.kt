@@ -3,6 +3,7 @@ package com.example.project_android.data.services
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
+import com.example.project_android.data.models.network.ReviewResponse
 import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import retrofit2.Call
@@ -46,4 +47,8 @@ interface MovieApiInterface {
     //Recommend movies
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/recommendations?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getRecommendMovie(@Path("movie_id") id : String) : Call<MovieResponse>
+
+    //Get Reviews
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/reviews?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getReviews(@Path("movie_id") id : String) : Call<ReviewResponse>
 }
