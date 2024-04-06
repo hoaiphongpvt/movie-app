@@ -16,9 +16,7 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val BASE_IMG = TheMovieDatabaseAPI.BASE_IMG
-
         private val movieImg: ImageView = view.findViewById((R.id.imageView))
-
         fun bindMovie(movie: Movie) {
             Glide.with(movieImg).load(BASE_IMG + movie.posterPath).into(movieImg)
         }

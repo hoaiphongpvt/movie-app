@@ -3,9 +3,11 @@ package com.example.project_android.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.entity.Review
 import com.example.project_android.data.models.entity.Video
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
+import com.example.project_android.data.models.network.ReviewResponse
 import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.services.ApiServices
 import com.example.project_android.data.services.MovieApiInterface
@@ -85,6 +87,24 @@ class MovieDetailsViewModel : ViewModel() {
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                callback(emptyList())
+            }
+        })
+    }
+
+    fun getReviews(movieID: String, callback: (List<Review>, Int) -> Unit) {
+        val call: Call<ReviewResponse> = apiService.getReviews(movieID)
+
+        call.enqueue(object : Callback<ReviewResponse> {
+            override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
+                if (response.isSuccessful) {
+                    val reviews = response.body()?.reviews
+                    val totalReviews = response.body()?.totalReviews
+                    callback(reviews!!, totalReviews!!)
+                }
+            }
+
+            override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                callback(emptyList(), 0)
             }
         })
     }
