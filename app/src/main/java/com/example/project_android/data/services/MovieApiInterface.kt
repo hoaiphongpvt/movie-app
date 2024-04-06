@@ -39,6 +39,11 @@ interface MovieApiInterface {
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/credits?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getListCasts(@Path("movie_id") id: String) : Call<CastResponse>
 
+    //Get List Video
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/videos?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getListVideos(@Path("movie_id") id: String) : Call<VideoResponse>
+
+    //Recommend movies
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/recommendations?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getRecommendMovie(@Path("movie_id") id : String) : Call<MovieResponse>
 }

@@ -5,6 +5,7 @@ import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.entity.Video
 import com.example.project_android.data.models.network.CastResponse
+import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.services.ApiServices
 import com.example.project_android.data.services.MovieApiInterface
@@ -63,6 +64,27 @@ class MovieDetailsViewModel : ViewModel() {
 
             override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
                 TODO("Not yet implemented")
+            }
+        })
+     }
+
+    fun getListRecommendMovies(movieID: String, callback: (List<Movie>) -> Unit) {
+        val call: Call<MovieResponse> = apiService.getRecommendMovie(movieID)
+
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if (response.isSuccessful) {
+                    val listRecommendMovies = response.body()?.movie
+                    if (listRecommendMovies != null) {
+                        callback(listRecommendMovies)
+                    }
+                } else {
+                    callback(emptyList())
+                }
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+               callback(emptyList())
             }
         })
     }
