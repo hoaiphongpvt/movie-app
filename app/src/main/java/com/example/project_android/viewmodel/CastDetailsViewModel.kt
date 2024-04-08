@@ -13,11 +13,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CastDetailsViewModel: ViewModel() {
-
+    private val apiService = ApiServices.getInstance().create(PersonApiInterface::class.java)
     fun getPersonData(personID: String, callback: (Person?) -> Unit) {
-        val apiService = ApiServices.getInstance().create(PersonApiInterface::class.java)
         val call: Call<Person> = apiService.getPersonDetails(personID)
-
         call.enqueue(object : Callback<Person> {
             override fun onResponse(call: Call<Person>, response: Response<Person>) {
                 if (response.isSuccessful) {
@@ -35,7 +33,6 @@ class CastDetailsViewModel: ViewModel() {
     }
 
     fun getListImagesPerson(personID: String, callback: (List<Image>) -> Unit) {
-        val apiService = ApiServices.getInstance().create(PersonApiInterface::class.java)
         val call: Call<PersonImageResponse> = apiService.getListImagesPerson(personID)
 
         call.enqueue(object : Callback<PersonImageResponse> {
@@ -58,7 +55,6 @@ class CastDetailsViewModel: ViewModel() {
     }
 
     fun getCombinedCredits(personID: String, callback: (List<Credit>) -> Unit) {
-        val apiService = ApiServices.getInstance().create(PersonApiInterface::class.java)
         val call: Call<PersonCreditResponse> = apiService.getCombinedCredits(personID)
 
         call.enqueue(object : Callback<PersonCreditResponse> {
@@ -75,9 +71,7 @@ class CastDetailsViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<PersonCreditResponse>, t: Throwable) {
-
             }
         })
     }
-
 }

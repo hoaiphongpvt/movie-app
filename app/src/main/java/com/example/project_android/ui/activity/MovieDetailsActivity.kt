@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -16,9 +15,12 @@ import com.bumptech.glide.Glide
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.entity.Review
 import com.example.project_android.data.models.entity.Video
 import com.example.project_android.data.remote.TheMovieDatabaseAPI.BASE_IMG
 import com.example.project_android.ui.adapters.CastAdapter
+import com.example.project_android.ui.adapters.MovieAdapter
+import com.example.project_android.ui.adapters.ReviewAdapter
 import com.example.project_android.ui.adapters.VideoAdapter
 import com.example.project_android.utils.convertDateFormat
 import com.example.project_android.viewmodel.MovieDetailsViewModel
@@ -37,8 +39,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var seasonText: TextView
     private lateinit var movieLanguage: TextView
     private lateinit var overviewText: TextView
+    private lateinit var totalReviews: TextView
     private lateinit var castRecyclerView: RecyclerView
     private lateinit var videoRecyclerView: RecyclerView
+    private lateinit var recommendRecyclerView: RecyclerView
+    private lateinit var reviewRecyclerView: RecyclerView
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +61,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         seasonText = findViewById(R.id.seasonText)
         movieLanguage = findViewById(R.id.movieLanguage)
         overviewText = findViewById(R.id.overviewText)
+        totalReviews = findViewById(R.id.totalReviews)
         castRecyclerView = findViewById(R.id.castRecyclerView)
         videoRecyclerView = findViewById(R.id.videosRecyclerView)
+        recommendRecyclerView = findViewById(R.id.recommendRecyclerview)
+        reviewRecyclerView = findViewById(R.id.reviewRecyclerview)
 
         val movieID = intent.getStringExtra("movieID")
 
@@ -89,12 +97,29 @@ class MovieDetailsActivity : AppCompatActivity() {
             movieDetailsViewModel.getListVideosData(movieID) { videos: List<Video> ->
                 setupVideoAdapter(videoRecyclerView, videos)
             }
+
+            movieDetailsViewModel.getListRecommendMovies(movieID) {movies : List<Movie> ->
+                setupMovieAdapter(recommendRecyclerView, movies)
+            }
+
+            movieDetailsViewModel.getReviews(movieID) { reviews: List<Review>, total: Int ->
+                totalReviews.text = "(${total})"
+                setupReviewAdapter(reviewRecyclerView, reviews)
+            }
         }
     }
     private fun setupCastAdapter(recyclerView: RecyclerView, casts: List<Cast>) {
         recyclerView.adapter = CastAdapter(casts) { cast ->
             val intent = Intent(this, CastDetailsActivity::class.java)
             intent.putExtra("castID", cast.id.toString())
+            startActivity(intent)
+        }
+    }
+
+    private fun setupMovieAdapter(recyclerView: RecyclerView, movies: List<Movie>) {
+        recyclerView.adapter = MovieAdapter(movies) { movie ->
+            val intent = Intent(this, MovieDetailsActivity::class.java)
+            intent.putExtra("movieID", movie.id.toString())
             startActivity(intent)
         }
     }
@@ -108,5 +133,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun setupReviewAdapter(recyclerView: RecyclerView, reviews: List<Review>) {
+        recyclerView.adapter = ReviewAdapter(reviews)
+    }
 }

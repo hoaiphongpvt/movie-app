@@ -1,23 +1,20 @@
 package com.example.project_android.viewmodel
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.example.project_android.data.models.network.BaseResponse
 import com.example.project_android.data.models.network.SessionResponse
 import com.example.project_android.data.models.network.TokenResponse
 import com.example.project_android.data.services.ApiServices
 import com.example.project_android.data.services.AuthenApiInterface
-import com.example.project_android.ui.activity.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val context: Context) : ViewModel(){
 
-    val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
-    fun login(username: String, password: String) {
+    private val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
+    fun login(username: String, password: String, callback: (Boolean, String) -> Unit) {
         apiService.getRequestToken().enqueue(object : Callback<TokenResponse> {
             override fun onResponse(call: Call<TokenResponse>, response: Response<TokenResponse>) {
 
@@ -28,23 +25,21 @@ class LoginViewModel(private val context: Context) : ViewModel(){
                             if (tokenResponse?.success == true) {
                                 createSession(tokenResponse.request_token) { sessionResponse ->
                                     if (sessionResponse?.success == true) {
-                                        Toast.makeText(context, "Log in successfully.", Toast.LENGTH_LONG).show()
-                                        val intent = Intent(context, MainActivity::class.java)
-                                        context.startActivity(intent)
+                                        callback(true, sessionResponse.session_id)
                                     } else {
-                                        Toast.makeText(context, "Login fail! Please try again!", Toast.LENGTH_LONG).show()
+                                        callback(false, "Login fail! Please try again!")
                                     }
                                 }
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(context, "Failed to get request token.", Toast.LENGTH_LONG).show()
+                    callback(false, "Failed to get request token.")
                 }
             }
 
             override fun onFailure(call: Call<TokenResponse>, t: Throwable) {
-                Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_LONG).show()
+                callback(false, "Failed to connect to server.")
             }
         })
     }
