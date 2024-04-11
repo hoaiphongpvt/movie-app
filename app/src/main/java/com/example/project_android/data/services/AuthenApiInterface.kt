@@ -2,6 +2,7 @@ package com.example.project_android.data.services
 
 import com.example.project_android.data.models.entity.SessionIdRequest
 import com.example.project_android.data.models.network.BaseResponse
+import com.example.project_android.data.models.network.GuestSessionResponse
 import com.example.project_android.data.models.network.SessionResponse
 import com.example.project_android.data.models.network.SuccessResponse
 import com.example.project_android.data.models.network.TokenResponse
@@ -38,5 +39,9 @@ interface AuthenApiInterface {
     //Delete Session
     @HTTP(method = "DELETE", path = "${TheMovieDatabaseAPI.API_VERSION}/authentication/session?api_key=${TheMovieDatabaseAPI.API_KEY}", hasBody = true)
     fun deleteSession(@Body sessionIdRequest: SessionIdRequest) : Call<SuccessResponse>
+
+    //Create Guest Session For FB and GG Login
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/authentication/guest_session/new?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun createGuestSession() : Call<GuestSessionResponse>
 }
 
