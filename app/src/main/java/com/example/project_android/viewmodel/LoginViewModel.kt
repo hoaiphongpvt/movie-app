@@ -3,6 +3,7 @@ package com.example.project_android.viewmodel
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import com.example.project_android.data.models.network.GuestSessionResponse
 import com.example.project_android.data.models.network.SessionResponse
 import com.example.project_android.data.models.network.TokenResponse
 import com.example.project_android.data.services.ApiServices
@@ -10,7 +11,6 @@ import com.example.project_android.data.services.AuthenApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class LoginViewModel(private val context: Context) : ViewModel(){
 
     private val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
@@ -80,6 +80,27 @@ class LoginViewModel(private val context: Context) : ViewModel(){
             }
 
             override fun onFailure(call: Call<SessionResponse>, t: Throwable) {
+                Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_LONG).show()
+                callback(null)
+            }
+        })
+    }
+
+    fun signInGoogle(callback: (GuestSessionResponse?) -> Unit) {
+        val call : Call<GuestSessionResponse> = apiService.createGuestSession()
+
+        call.enqueue(object : Callback<GuestSessionResponse> {
+            override fun onResponse(call: Call<GuestSessionResponse>, response: Response<GuestSessionResponse>) {
+                if (response.isSuccessful) {
+                    val guestSessionResponse = response.body()
+                    callback(guestSessionResponse)
+                } else {
+                    Toast.makeText(context, "Log in fail.", Toast.LENGTH_LONG).show()
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<GuestSessionResponse>, t: Throwable) {
                 Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_LONG).show()
                 callback(null)
             }
