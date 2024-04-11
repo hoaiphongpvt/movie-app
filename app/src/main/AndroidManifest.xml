@@ -14,12 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_android"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.activity.ResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.SigninGoogleActivity"
-            android:exported="false" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity
             android:name=".ui.activity.VideoDetailsActivity"
             android:exported="false"
