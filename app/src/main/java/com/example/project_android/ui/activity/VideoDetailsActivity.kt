@@ -8,11 +8,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_android.R
+import com.example.project_android.data.services.AdsServices
+import com.google.android.gms.ads.AdView
 
 class VideoDetailsActivity : AppCompatActivity() {
 
     private lateinit var titlePage: TextView
     private lateinit var btnBack: ImageButton
+    private lateinit var mAdView: AdView
+    private val adsServices = AdsServices(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_details)
@@ -22,6 +26,7 @@ class VideoDetailsActivity : AppCompatActivity() {
         val videoKey = intent.getStringExtra("videoKey")
         titlePage = findViewById(R.id.video_title)
         btnBack = findViewById(R.id.backButton)
+        mAdView = findViewById(R.id.adView)
         titlePage.text = videoName
 
         val frameVideo = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; border: none; } </style></head><body><iframe src=\"https://www.youtube.com/embed/$videoKey\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
@@ -40,5 +45,9 @@ class VideoDetailsActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             onBackPressed()
         }
+
+        adsServices.loadBanner(mAdView,this)
     }
+
+
 }

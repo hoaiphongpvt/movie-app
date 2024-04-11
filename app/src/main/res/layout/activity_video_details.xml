@@ -9,7 +9,6 @@
 
     <include layout="@layout/toolbar" />
 
-
     <WebView
         android:id="@+id/mWebView"
         android:layout_width="match_parent"
@@ -32,6 +31,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/mWebView"
         app:layout_constraintTop_toBottomOf="@id/mWebView" />
+
+    <!-- Add AdView here -->
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/video_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/9214589741" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_bottom"
