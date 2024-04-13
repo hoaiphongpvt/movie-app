@@ -102,7 +102,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-
         btnSignInGoogle.setOnClickListener {
             signInGoogle()
         }
