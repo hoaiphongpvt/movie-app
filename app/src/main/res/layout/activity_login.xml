@@ -108,7 +108,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="14dp"
-            android:gravity="center">
+            android:layout_gravity="center_vertical">
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/btnSignInGoogle"
@@ -118,13 +118,12 @@
                 android:text=""
                 app:buttonSize="wide" />
 
+
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnSignInFacebook"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sign in with Facebook"
-                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"/>
         </LinearLayout>

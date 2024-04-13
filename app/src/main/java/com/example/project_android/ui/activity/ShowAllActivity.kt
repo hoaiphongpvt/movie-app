@@ -40,6 +40,9 @@ class ShowAllActivity : AppCompatActivity() {
             "topRated" -> {
                 titlePage.text = "Top Rated"
             }
+            "favoriteMovie" -> {
+                titlePage.text = "Favorite Movies"
+            }
             else -> {
                 // Xử lý trường hợp không xác định
             }

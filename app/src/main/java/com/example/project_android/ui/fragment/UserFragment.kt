@@ -10,18 +10,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.project_android.R
+import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import com.example.project_android.ui.activity.LoginActivity
+import com.example.project_android.ui.activity.ShowAllActivity
 import com.example.project_android.viewmodel.UserViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 
 class UserFragment : Fragment() {
 
@@ -35,8 +31,6 @@ class UserFragment : Fragment() {
     private  var sessionId : String? = null
     private var guestSessionId : String? = null
 
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var mAuth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,24 +41,14 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        userViewModel = UserViewModel(requireContext())
         btnLogout = requireView().findViewById(R.id.btnLogout)
         btnWatchList = requireView().findViewById(R.id.watchlist)
-        btnFavoriteMovies = requireView().findViewById(R.id.favoriteMovies)
+        btnFavoriteMovies = requireView().findViewById(R.id.btnFavoriteMovies)
         name = requireView().findViewById(R.id.name)
         username = requireView().findViewById(R.id.username)
         avatar = requireView().findViewById(R.id.avatar)
 
-        mAuth = FirebaseAuth.getInstance()
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-
-        val auth = Firebase.auth
-        val user = auth.currentUser
 
         if (arguments?.getString("sessionId")?.isNotEmpty() == true) {
             sessionId = arguments?.getString("sessionId")
@@ -85,13 +69,16 @@ class UserFragment : Fragment() {
         }
 
 
-        if (user != null) {
-            name.text = user.displayName
-            username.text = user.email
-            Glide.with(avatar).load(user.photoUrl).into(avatar)
+        if (guestSessionId != null) {
+            val user = userViewModel.getUserGoogle()
+            if (user != null) {
+                name.text = user.displayName
+                username.text = user.email
+                Glide.with(avatar).load(user.photoUrl).into(avatar)
+            }
         }
 
-
+        //Log out
         btnLogout.setOnClickListener {
             if (!sessionId.isNullOrEmpty()) {
                 userViewModel.logout(sessionId!!) { result, msg ->
@@ -102,13 +89,30 @@ class UserFragment : Fragment() {
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                     }
                 }
-            } else {
-                mAuth.signOut()
-                mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity()) {
-                    val intent = Intent(requireContext(), LoginActivity::class.java)
-                    startActivity(intent)
+            } else if (!guestSessionId.isNullOrEmpty()) {
+                userViewModel.logoutGoogle { success ->
+                    if (success) {
+                        val intent = Intent(requireContext(), LoginActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             }
         }
+
+
+        btnFavoriteMovies.setOnClickListener {
+            userViewModel.getFavoriteMovie(20938610, sessionId!!) {favoriteMovies ->
+                if (favoriteMovies != null) {
+                    goToShowAll("favoriteMovie", favoriteMovies.movie)
+                }
+            }
+        }
+    }
+
+    private fun goToShowAll(type: String, movies: List<Movie>) {
+        val intent = Intent(requireContext(), ShowAllActivity::class.java)
+        intent.putExtra("type", type)
+        intent.putExtra("movies", ArrayList(movies))
+        startActivity(intent)
     }
 }
