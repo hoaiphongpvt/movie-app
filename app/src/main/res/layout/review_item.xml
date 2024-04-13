@@ -94,5 +94,16 @@
             android:layout_marginEnd="8dp"
             android:textColor="@color/white"
             android:textSize="14sp" />
+        <Button
+            android:id="@+id/btnShowAllReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            app:layout_constraintStart_toStartOf="@id/content"
+            app:layout_constraintEnd_toEndOf="@id/content"
+            android:background="@android:color/transparent"
+            android:textSize="12sp"
+            android:alpha="0.8"
+            android:text="Show all"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

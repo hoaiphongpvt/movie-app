@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -105,6 +106,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             movieDetailsViewModel.getReviews(movieID) { reviews: List<Review>, total: Int ->
                 totalReviews.text = "(${total})"
                 setupReviewAdapter(reviewRecyclerView, reviews)
+
             }
         }
     }
