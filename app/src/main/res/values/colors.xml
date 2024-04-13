@@ -9,4 +9,7 @@
     <color name="bgBottomNav">#000000</color>
     <color name="black">#000000</color>
     <color name="starColor">#e85555</color>
+    <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
+    <color name="com_facebook_button_background_color_focused">#3C5A99</color>
+    <color name="com_facebook_button_border_color_focused">#3C5A99</color>
 </resources>

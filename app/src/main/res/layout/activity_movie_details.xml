@@ -196,14 +196,43 @@
                                 android:id="@+id/movieLanguage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:layout_marginStart="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toRightOf="@id/airDateImage"
+                                app:layout_constraintTop_toTopOf="@id/airDateImage"
+                                tools:text="English" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <ImageView
+                                android:id="@+id/favoriteMovieImg"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_baseline_favorite_24"
+                                app:tint="@color/starColor" />
+
+                            <TextView
+                                android:id="@+id/favoriteMovieText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_marginStart="8dp"
                                 android:gravity="center_vertical"
                                 android:textSize="12sp"
                                 android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="@id/airDateImage"
-                                app:layout_constraintLeft_toRightOf="@id/airDateImage"
-                                app:layout_constraintTop_toTopOf="@id/airDateImage"
-                                tools:text="English" />
+                                app:layout_constraintBottom_toBottomOf="@id/favoriteMovieImg"
+                                app:layout_constraintLeft_toRightOf="@id/favoriteMovieImg"
+                                app:layout_constraintTop_toTopOf="@id/favoriteMovieImg"
+                                android:text="Add to favorite" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

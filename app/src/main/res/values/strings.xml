@@ -4,4 +4,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_video_details">VideoDetailsActivity</string>
     <string name="default_web_client_id">284314557041-duieebh1olunfrhiofbe33ec91hmvn7c.apps.googleusercontent.com</string>
+
+
+    <string name="facebook_app_id">950695979652515950695979652515</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">a6de2260c74cd2ecead35e7c218376e1</string>
+
 </resources>

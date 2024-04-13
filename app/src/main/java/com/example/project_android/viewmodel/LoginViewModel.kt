@@ -86,7 +86,7 @@ class LoginViewModel(private val context: Context) : ViewModel(){
         })
     }
 
-    fun signInGoogle(callback: (GuestSessionResponse?) -> Unit) {
+    fun createGuestSession(callback: (GuestSessionResponse?) -> Unit) {
         val call : Call<GuestSessionResponse> = apiService.createGuestSession()
 
         call.enqueue(object : Callback<GuestSessionResponse> {
