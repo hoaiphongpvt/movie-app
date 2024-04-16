@@ -5,6 +5,7 @@ import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.entity.Review
 import com.example.project_android.data.models.entity.Video
+import com.example.project_android.data.models.network.AccountStateResponse
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.models.network.ReviewResponse
@@ -105,6 +106,28 @@ class MovieDetailsViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
                 callback(emptyList(), 0)
+            }
+        })
+    }
+
+    fun checkAccountState(movieID: String, sessionID: String, callback: (AccountStateResponse?, String) -> Unit) {
+        val call: Call<AccountStateResponse> = apiService.checkAccountState(movieID, sessionID)
+
+        call.enqueue(object : Callback<AccountStateResponse> {
+            override fun onResponse(
+                call: Call<AccountStateResponse>,
+                response: Response<AccountStateResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        callback(result, "Success")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AccountStateResponse>, t: Throwable) {
+                callback(null, "Fail!")
             }
         })
     }

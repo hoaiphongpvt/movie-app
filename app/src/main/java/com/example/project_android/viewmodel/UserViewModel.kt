@@ -1,18 +1,18 @@
 package com.example.project_android.viewmodel
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.example.project_android.data.services.ApiServices
 import com.example.project_android.data.services.AuthenApiInterface
 import androidx.lifecycle.ViewModel
 import com.example.project_android.R
+import com.example.project_android.data.models.entity.FavoriteRequest
 import com.example.project_android.data.models.entity.SessionIdRequest
 import com.example.project_android.data.models.entity.User
+import com.example.project_android.data.models.network.BaseResponse
 import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.models.network.SuccessResponse
 import com.example.project_android.data.services.UserApiInterface
-import com.example.project_android.ui.activity.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -65,6 +65,50 @@ class UserViewModel(private val context: Context) : ViewModel() {
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 callback(null)
+            }
+        })
+    }
+
+    fun addMovieToFavoriteList(accountID: Int, sessionID: String, movieID: String, callback: (Boolean, String) -> Unit) {
+        val favoriteRequest = FavoriteRequest("movie", movieID, true)
+        apiUserService.addToFavorite(accountID, sessionID, favoriteRequest).enqueue(object: Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        if(result.success) {
+                            callback(result.success, result.status_message)
+                        }
+                    }
+                } else {
+                    callback(false, "Fail to add movie to favorite list!")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                callback(false,"Fail to add movie to favorite list!")
+            }
+        })
+    }
+
+    fun deleteMovieToFavoriteList(accountID: Int, sessionID: String, movieID: String, callback: (Boolean, String) -> Unit) {
+        val favoriteRequest = FavoriteRequest("movie", movieID, false)
+        apiUserService.deleteToFavorite(accountID, sessionID, favoriteRequest).enqueue(object: Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        if(result.success) {
+                            callback(result.success, result.status_message)
+                        }
+                    }
+                } else {
+                    callback(false, "Fail to delete movie from favorite list!")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                callback(false,"Fail to delete movie from favorite list!")
             }
         })
     }

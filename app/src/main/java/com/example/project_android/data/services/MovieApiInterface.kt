@@ -1,6 +1,7 @@
 package com.example.project_android.data.services
 
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.network.AccountStateResponse
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
 import com.example.project_android.data.models.network.ReviewResponse
@@ -52,4 +53,8 @@ interface MovieApiInterface {
     //Get Reviews
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/reviews?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getReviews(@Path("movie_id") id : String) : Call<ReviewResponse>
+
+    //Check Account State
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/account_states?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun checkAccountState(@Path("movie_id") id : String, @Query("session_id") sessionId : String) : Call<AccountStateResponse>
 }
