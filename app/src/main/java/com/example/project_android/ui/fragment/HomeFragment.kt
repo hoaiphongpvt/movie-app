@@ -23,6 +23,8 @@ import java.util.Timer
 import java.util.TimerTask
 class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
+    private var sessionId : String? = null
+    private var guestSessionId : String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,12 +35,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        if (arguments?.getString("sessionId")?.isNotEmpty() == true) {
+            sessionId = arguments?.getString("sessionId")
+        } else if(arguments?.getString("guestSessionId")?.isNotEmpty() == true) {
+            guestSessionId = arguments?.getString("guestSessionId")
+        }
         setupMovieList()
     }
     private fun goToShowAll(type: String, movies: List<Movie>) {
         val intent = Intent(requireContext(), ShowAllActivity::class.java)
         intent.putExtra("type", type)
         intent.putExtra("movies", ArrayList(movies))
+        intent.putExtra("sessionID", sessionId)
         startActivity(intent)
     }
     private fun setupMovieList() {
@@ -92,6 +100,7 @@ class HomeFragment : Fragment() {
             viewPager.adapter = MovieBannerAutoScroll(movies, requireContext()) { movie ->
                 val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
                 intent.putExtra("movieID", movie.id.toString())
+                intent.putExtra("sessionID", sessionId)
                 startActivity(intent)
             }
             // Tự động trượt các item sau một khoảng thời gian
@@ -115,6 +124,7 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = MovieAdapter(movies) { movie ->
             val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
             intent.putExtra("movieID", movie.id.toString())
+            intent.putExtra("sessionID", sessionId)
             startActivity(intent)
         }
     }

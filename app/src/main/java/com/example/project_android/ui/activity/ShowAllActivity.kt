@@ -28,6 +28,7 @@ class ShowAllActivity : AppCompatActivity() {
         // Lấy dữ liệu từ intent
         val type = intent.getStringExtra("type")
         val movies = intent.getSerializableExtra("movies") as ArrayList<Movie>
+        val sessionID = intent.getStringExtra("sessionID")
 
         // Xử lý dữ liệu theo loại
         when (type) {
@@ -52,6 +53,7 @@ class ShowAllActivity : AppCompatActivity() {
         movieAdapter = MovieAdapter(movies) { movie ->
             val intent = Intent(this, MovieDetailsActivity::class.java)
             intent.putExtra("movieID", movie.id.toString())
+            intent.putExtra("sessionID", sessionID)
             startActivity(intent)
         }
         recyclerView.adapter = movieAdapter

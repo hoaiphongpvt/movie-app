@@ -102,7 +102,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:background="@drawable/border_button"
-        android:layout_marginBottom="58dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -66,6 +66,9 @@ class UserFragment : Fragment() {
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                 }
             }
+        } else {
+            btnWatchList.visibility = View.GONE
+            btnFavoriteMovies.visibility = View.GONE
         }
 
 
@@ -113,6 +116,7 @@ class UserFragment : Fragment() {
         val intent = Intent(requireContext(), ShowAllActivity::class.java)
         intent.putExtra("type", type)
         intent.putExtra("movies", ArrayList(movies))
+        intent.putExtra("sessionID", sessionId)
         startActivity(intent)
     }
 }

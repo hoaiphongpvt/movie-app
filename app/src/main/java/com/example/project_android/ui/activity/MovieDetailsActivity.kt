@@ -5,11 +5,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,10 +27,12 @@ import com.example.project_android.ui.adapters.ReviewAdapter
 import com.example.project_android.ui.adapters.VideoAdapter
 import com.example.project_android.utils.convertDateFormat
 import com.example.project_android.viewmodel.MovieDetailsViewModel
+import com.example.project_android.viewmodel.UserViewModel
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var movieDetailsViewModel: MovieDetailsViewModel
+    private lateinit var userViewModel : UserViewModel
     private lateinit var titlePage : TextView
     private lateinit var backButton : ImageButton
     private lateinit var movieBackground : ImageView
@@ -39,17 +43,20 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var episodeText: TextView
     private lateinit var seasonText: TextView
     private lateinit var movieLanguage: TextView
+    private lateinit var btnFav : ToggleButton
     private lateinit var overviewText: TextView
     private lateinit var totalReviews: TextView
     private lateinit var castRecyclerView: RecyclerView
     private lateinit var videoRecyclerView: RecyclerView
     private lateinit var recommendRecyclerView: RecyclerView
     private lateinit var reviewRecyclerView: RecyclerView
+    private var sessionID: String? = null
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
         movieDetailsViewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        userViewModel = UserViewModel(this)
 
         titlePage = findViewById(R.id.titlePage)
         backButton = findViewById(R.id.backButton)
@@ -61,6 +68,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         episodeText = findViewById(R.id.episodeText)
         seasonText = findViewById(R.id.seasonText)
         movieLanguage = findViewById(R.id.movieLanguage)
+        btnFav = findViewById(R.id.favButton)
         overviewText = findViewById(R.id.overviewText)
         totalReviews = findViewById(R.id.totalReviews)
         castRecyclerView = findViewById(R.id.castRecyclerView)
@@ -69,6 +77,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         reviewRecyclerView = findViewById(R.id.reviewRecyclerview)
 
         val movieID = intent.getStringExtra("movieID")
+        sessionID = intent.getStringExtra("sessionID")
 
         if (movieID != null) {
             movieDetailsViewModel.getMovieDetailsData(movieID) { movieDetails ->
@@ -108,6 +117,48 @@ class MovieDetailsActivity : AppCompatActivity() {
                 setupReviewAdapter(reviewRecyclerView, reviews)
 
             }
+
+            if (sessionID != null) {
+                movieDetailsViewModel.checkAccountState(movieID, sessionID!!) { accountState, msg ->
+                    if (accountState != null) {
+                        if(accountState.favorite) {
+                            btnFav.isChecked = true
+                            btnFav.text = "Favorite"
+                            btnFav.setBackgroundResource(R.color.starColor)
+                        } else {
+                            btnFav.isChecked = false
+                            btnFav.text = "Add to favorite"
+                            btnFav.setBackgroundResource(R.color.btnPrimary)
+                        }
+                    }
+                }
+
+                btnFav.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        userViewModel.addMovieToFavoriteList(20938610,
+                            sessionID!!, movieID) { result, msg ->
+                            if (result) {
+                                btnFav.text = "Favorite"
+                                btnFav.setBackgroundResource(R.color.starColor)
+                            } else {
+                                Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    } else {
+                        userViewModel.deleteMovieToFavoriteList(20938610,
+                            sessionID!!, movieID) { result, msg ->
+                            if (result) {
+                                btnFav.text = "Add to favorite"
+                                btnFav.setBackgroundResource(R.color.btnPrimary)
+                            } else {
+                                Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                }
+            } else {
+                btnFav.visibility = View.GONE
+            }
         }
     }
     private fun setupCastAdapter(recyclerView: RecyclerView, casts: List<Cast>) {
@@ -122,6 +173,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         recyclerView.adapter = MovieAdapter(movies) { movie ->
             val intent = Intent(this, MovieDetailsActivity::class.java)
             intent.putExtra("movieID", movie.id.toString())
+            intent.putExtra("sessionID", sessionID)
             startActivity(intent)
         }
     }

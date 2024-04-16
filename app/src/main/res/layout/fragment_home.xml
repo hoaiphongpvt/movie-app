@@ -15,7 +15,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="729dp"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/rm_movies_list_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"/>
+                    android:layout_height="200dp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

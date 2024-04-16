@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/movie_background"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="220dp"
         android:contentDescription="Movie_Image"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,12 +44,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_background">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="460dp"
+            android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -68,7 +70,6 @@
                         android:id="@+id/movieTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Titile"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="36sp"
@@ -112,6 +113,32 @@
                         app:layout_constraintStart_toEndOf="@+id/ratingBar"
                         app:layout_constraintTop_toTopOf="@id/ratingBar"
                         tools:text="189 votes" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="4dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/numOfVotes"
+                        android:layout_marginTop="10dp">
+
+                        <ToggleButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:padding="6dp"
+                            android:id="@+id/favButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_gravity="center"
+                            android:textStyle="normal"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:background="@android:color/transparent"
+                            android:textOn="Loading..."
+                            android:textOff="Loading..."
+                            />
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:id="@+id/subInfoLayout"
@@ -205,35 +232,6 @@
                                 app:layout_constraintTop_toTopOf="@id/airDateImage"
                                 tools:text="English" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp">
-
-                            <ImageView
-                                android:id="@+id/favoriteMovieImg"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:contentDescription="@null"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_baseline_favorite_24"
-                                app:tint="@color/starColor" />
-
-                            <TextView
-                                android:id="@+id/favoriteMovieText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_marginStart="8dp"
-                                android:gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="@id/favoriteMovieImg"
-                                app:layout_constraintLeft_toRightOf="@id/favoriteMovieImg"
-                                app:layout_constraintTop_toTopOf="@id/favoriteMovieImg"
-                                android:text="Add to favorite" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -262,11 +260,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
                     android:id="@+id/castText"
@@ -284,11 +278,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -322,11 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
                     android:id="@+id/recommendText"
@@ -345,10 +331,7 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
