@@ -3,11 +3,14 @@ package com.example.project_android.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.entity.RatingRequest
 import com.example.project_android.data.models.entity.Review
 import com.example.project_android.data.models.entity.Video
 import com.example.project_android.data.models.network.AccountStateResponse
+import com.example.project_android.data.models.network.BaseResponse
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
+import com.example.project_android.data.models.network.RatingResponse
 import com.example.project_android.data.models.network.ReviewResponse
 import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.services.ApiServices
@@ -128,6 +131,51 @@ class MovieDetailsViewModel : ViewModel() {
 
             override fun onFailure(call: Call<AccountStateResponse>, t: Throwable) {
                 callback(null, "Fail!")
+            }
+        })
+    }
+
+    fun addRating(movieID: String, sessionID: String, value: Float, callback: (Boolean, String) -> Unit) {
+        val ratingRequest = RatingRequest(value)
+        val call: Call<RatingResponse> = apiService.addRating(movieID, sessionID, ratingRequest)
+
+        call.enqueue(object : Callback<RatingResponse> {
+            override fun onResponse(call: Call<RatingResponse>, response: Response<RatingResponse>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        if (result.status_code == 1) {
+                            callback(true, result.status_message)
+                        }
+                    } else {
+                        callback(false, "Fail to rate movie.")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RatingResponse>, t: Throwable) {
+                callback(false, "Error!")
+            }
+        })
+    }
+
+    fun deleteRating(movieID: String, sessionID: String, callback: (Boolean, String) -> Unit) {
+        val call: Call<BaseResponse> = apiService.deleteRating(movieID, sessionID)
+
+        call.enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null) {
+                        if (result.success) {
+                            callback(true, result.status_message)
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                callback(false, "Error!")
             }
         })
     }

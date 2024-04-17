@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import android.widget.ToggleButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
@@ -28,6 +30,11 @@ import com.example.project_android.ui.adapters.VideoAdapter
 import com.example.project_android.utils.convertDateFormat
 import com.example.project_android.viewmodel.MovieDetailsViewModel
 import com.example.project_android.viewmodel.UserViewModel
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -44,6 +51,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var seasonText: TextView
     private lateinit var movieLanguage: TextView
     private lateinit var btnFav : ToggleButton
+    private lateinit var btnRate : ToggleButton
     private lateinit var overviewText: TextView
     private lateinit var totalReviews: TextView
     private lateinit var castRecyclerView: RecyclerView
@@ -69,6 +77,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         seasonText = findViewById(R.id.seasonText)
         movieLanguage = findViewById(R.id.movieLanguage)
         btnFav = findViewById(R.id.favButton)
+        btnRate = findViewById(R.id.ratedButton)
         overviewText = findViewById(R.id.overviewText)
         totalReviews = findViewById(R.id.totalReviews)
         castRecyclerView = findViewById(R.id.castRecyclerView)
@@ -130,34 +139,132 @@ class MovieDetailsActivity : AppCompatActivity() {
                             btnFav.text = "Add to favorite"
                             btnFav.setBackgroundResource(R.color.btnPrimary)
                         }
+
+                        if (accountState.rated != false) {
+                            btnRate.isChecked = true
+                            btnRate.text = "Rated " + accountState.rated.toString().substringAfterLast("=").trim().dropLast(1).substringBefore(".") + " ⭐"
+                            btnRate.setBackgroundResource(R.color.starColor)
+                        } else {
+                            btnRate.isChecked = false
+                            btnRate.text = "Add rating"
+                            btnRate.setBackgroundResource(R.color.btnPrimary)
+                        }
+
+                        btnRate.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (isChecked) {
+                                var ratingValue: Float = 0.0f
+                                val ratingDialog: RatingDialog = RatingDialog.Builder(this)
+                                    .icon(R.drawable.rating)
+                                    .ratingBarColor(R.color.starColor)
+                                    .title(R.string.submit_feedback)
+                                    .onThresholdCleared { dialog, rating, thresholdCleared ->  ratingValue = rating}
+                                    .positiveButton(text = R.string.ok_text, textColor = R.color.black, background = R.drawable.rounded_corner) {dialog ->
+                                        movieDetailsViewModel.addRating(movieID, sessionID!!, ratingValue ) {result, msg ->
+                                            if (result) {
+                                                AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
+                                                    .setTitle("Success")
+                                                    .setMessage("Rated this movie and added to rated list.")
+                                                    .setCancelable(false)
+                                                    .setDarkMode(true)
+                                                    .setGravity(Gravity.CENTER)
+                                                    .setAnimation(DialogAnimation.SHRINK)
+                                                    .setOnClickListener(object : OnDialogClickListener {
+                                                        override fun onClick(dialog: AestheticDialog.Builder) {
+                                                            dialog.dismiss()
+                                                        }
+                                                    })
+                                                    .show()
+                                                btnRate.text = "Rated"
+                                                btnRate.setBackgroundResource(R.color.starColor)
+                                            } else {
+                                                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+                                            }
+                                        }
+                                        dialog.dismiss()
+                                    }
+                                    .build()
+
+                                ratingDialog.show()
+                            } else {
+                                movieDetailsViewModel.deleteRating(movieID, sessionID!!) { result, msg ->
+                                    if (result) {
+                                        AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
+                                            .setTitle("Success")
+                                            .setMessage("Removed this movie from rated list")
+                                            .setCancelable(false)
+                                            .setDarkMode(true)
+                                            .setGravity(Gravity.CENTER)
+                                            .setAnimation(DialogAnimation.SHRINK)
+                                            .setOnClickListener(object : OnDialogClickListener {
+                                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                                    dialog.dismiss()
+                                                }
+                                            })
+                                            .show()
+                                        btnRate.text = "Add rating"
+                                        btnRate.setBackgroundResource(R.color.btnPrimary)
+                                    } else {
+                                        Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                            }
+                        }
+
+                        btnFav.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (isChecked) {
+                                userViewModel.addMovieToFavoriteList(20938610,
+                                    sessionID!!, movieID) { result, msg ->
+                                    if (result) {
+                                        AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
+                                            .setTitle("Success")
+                                            .setMessage("Added this movie to favorite list")
+                                            .setCancelable(false)
+                                            .setDarkMode(true)
+                                            .setGravity(Gravity.CENTER)
+                                            .setAnimation(DialogAnimation.SHRINK)
+                                            .setOnClickListener(object : OnDialogClickListener {
+                                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                                    dialog.dismiss()
+                                                }
+                                            })
+                                            .show()
+                                        btnFav.text = "Favorite"
+                                        btnFav.setBackgroundResource(R.color.starColor)
+                                    } else {
+                                        Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                            } else {
+                                userViewModel.deleteMovieToFavoriteList(20938610,
+                                    sessionID!!, movieID) { result, msg ->
+                                    if (result) {
+                                        AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
+                                            .setTitle("Success")
+                                            .setMessage("Removed this movie from favorite list")
+                                            .setCancelable(false)
+                                            .setDarkMode(true)
+                                            .setGravity(Gravity.CENTER)
+                                            .setAnimation(DialogAnimation.SHRINK)
+                                            .setOnClickListener(object : OnDialogClickListener {
+                                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                                    dialog.dismiss()
+                                                }
+                                            })
+                                            .show()
+                                        btnFav.text = "Add to favorite"
+                                        btnFav.setBackgroundResource(R.color.btnPrimary)
+                                    } else {
+                                        Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
-                btnFav.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        userViewModel.addMovieToFavoriteList(20938610,
-                            sessionID!!, movieID) { result, msg ->
-                            if (result) {
-                                btnFav.text = "Favorite"
-                                btnFav.setBackgroundResource(R.color.starColor)
-                            } else {
-                                Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    } else {
-                        userViewModel.deleteMovieToFavoriteList(20938610,
-                            sessionID!!, movieID) { result, msg ->
-                            if (result) {
-                                btnFav.text = "Add to favorite"
-                                btnFav.setBackgroundResource(R.color.btnPrimary)
-                            } else {
-                                Toast.makeText(buttonView.context, msg, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                }
             } else {
                 btnFav.visibility = View.GONE
+                btnRate.visibility = View.GONE
             }
         }
     }
@@ -165,6 +272,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         recyclerView.adapter = CastAdapter(casts) { cast ->
             val intent = Intent(this, CastDetailsActivity::class.java)
             intent.putExtra("castID", cast.id.toString())
+            intent.putExtra("sessionID", sessionID)
             startActivity(intent)
         }
     }

@@ -3,6 +3,7 @@ package com.example.project_android.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -15,6 +16,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,21 +50,48 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener {
-
             if (username.text.isNotEmpty() && password.text.isNotEmpty()) {
                 loginViewModel.login(username.text.toString(), password.text.toString()) { result, sessionID ->
                     if (result) {
+                         AestheticDialog.Builder(this, DialogStyle.EMOTION, DialogType.SUCCESS)
+                            .setTitle("Success")
+                            .setMessage("Log in successfully.")
+                            .setDarkMode(true)
+                            .setGravity(Gravity.TOP)
+                            .setAnimation(DialogAnimation.SHRINK)
+                            .show()
                         val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra("sessionId", sessionID)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(this, "Login fail! Please try again!", Toast.LENGTH_SHORT).show()
+                        AestheticDialog.Builder(this, DialogStyle.EMOTION, DialogType.ERROR)
+                            .setTitle("Error")
+                            .setMessage("User name or password is not correct!")
+                            .setDarkMode(true)
+                            .setGravity(Gravity.TOP)
+                            .setAnimation(DialogAnimation.SHRINK)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            })
+                            .show()
                     }
                 }
             } else {
-                Toast.makeText(this, "Please enter username and password.", Toast.LENGTH_LONG).show()
+                AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.WARNING)
+                    .setTitle("Warning")
+                    .setMessage("Please enter username/password!")
+                    .setDarkMode(true)
+                    .setGravity(Gravity.CENTER)
+                    .setAnimation(DialogAnimation.SHRINK)
+                    .setOnClickListener(object : OnDialogClickListener {
+                        override fun onClick(dialog: AestheticDialog.Builder) {
+                            dialog.dismiss()
+                        }
+                    })
+                    .show()
             }
-
         }
         btnSignInGoogle.setOnClickListener {
             signInGoogle()

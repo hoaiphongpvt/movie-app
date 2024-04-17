@@ -69,6 +69,21 @@ class UserViewModel(private val context: Context) : ViewModel() {
         })
     }
 
+    fun getRatedMovie(accountID: Int, sessionID: String, callback: (MovieResponse?) -> Unit) {
+        apiUserService.getRatedMovie(accountID, sessionID).enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if (response.isSuccessful) {
+                    val ratedMovies = response.body()
+                    callback(ratedMovies)
+                }
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
+
     fun addMovieToFavoriteList(accountID: Int, sessionID: String, movieID: String, callback: (Boolean, String) -> Unit) {
         val favoriteRequest = FavoriteRequest("movie", movieID, true)
         apiUserService.addToFavorite(accountID, sessionID, favoriteRequest).enqueue(object: Callback<BaseResponse> {

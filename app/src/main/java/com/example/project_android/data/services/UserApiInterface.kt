@@ -23,7 +23,11 @@ interface UserApiInterface {
     @GET("${TheMovieDatabaseAPI.API_VERSION}/account/{account_id}/favorite/movies?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun getFavoriteMovie(@Path("account_id") accountId : Int, @Query("session_id") sessionId : String) : Call<MovieResponse>
 
-   //Add to favorite movie
+    // Get rated movies
+    @GET("${TheMovieDatabaseAPI.API_VERSION}/account/{account_id}/rated/movies?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun getRatedMovie(@Path("account_id") accountId : Int, @Query("session_id") sessionId : String) : Call<MovieResponse>
+
+    //Add to favorite movie
     @POST("${TheMovieDatabaseAPI.API_VERSION}/account/{account_id}/favorite?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun addToFavorite(@Path("account_id") accountId : Int, @Query("session_id") sessionID : String,@Body favoriteRequest : FavoriteRequest ) : Call<BaseResponse>
 

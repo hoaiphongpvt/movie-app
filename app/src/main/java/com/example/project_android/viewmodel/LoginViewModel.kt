@@ -30,6 +30,8 @@ class LoginViewModel(private val context: Context) : ViewModel(){
                                         callback(false, "Login fail! Please try again!")
                                     }
                                 }
+                            } else {
+                                callback(false, "Username or password is not correct!")
                             }
                         }
                     }
@@ -53,7 +55,6 @@ class LoginViewModel(private val context: Context) : ViewModel(){
                     val results = response.body()
                     callback(results)
                 } else {
-                    Toast.makeText(context, "Username or password is not correct!", Toast.LENGTH_LONG).show()
                     callback(null)
                 }
             }
@@ -74,7 +75,6 @@ class LoginViewModel(private val context: Context) : ViewModel(){
                     val results = response.body()
                     callback(results)
                 } else {
-                    Toast.makeText(context, "Log in fail.", Toast.LENGTH_LONG).show()
                     callback(null)
                 }
             }
@@ -95,13 +95,11 @@ class LoginViewModel(private val context: Context) : ViewModel(){
                     val guestSessionResponse = response.body()
                     callback(guestSessionResponse)
                 } else {
-                    Toast.makeText(context, "Log in fail.", Toast.LENGTH_LONG).show()
                     callback(null)
                 }
             }
 
             override fun onFailure(call: Call<GuestSessionResponse>, t: Throwable) {
-                Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_LONG).show()
                 callback(null)
             }
         })

@@ -28,12 +28,14 @@ class CastDetailsActivity : AppCompatActivity() {
     private lateinit var personBiography: TextView
     private lateinit var photosRecyclerView: RecyclerView
     private lateinit var knownForRecyclerView: RecyclerView
+    private var sessionID : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cast_details)
 
         castDetailsViewModel = ViewModelProvider(this).get(CastDetailsViewModel::class.java)
         val castID = intent.getStringExtra("castID")
+        sessionID = intent.getStringExtra("sessionID")
         titlePage = findViewById(R.id.titlePage)
         btnBack = findViewById(R.id.backButton)
         personImg = findViewById(R.id.personImage)
@@ -76,6 +78,7 @@ class CastDetailsActivity : AppCompatActivity() {
         recyclerView.adapter = CreditsListAdapter(credits) { credit ->
             val intent = Intent(this, MovieDetailsActivity::class.java)
             intent.putExtra("movieID", credit.id.toString())
+            intent.putExtra("sessionID", sessionID)
             startActivity(intent)
         }
     }

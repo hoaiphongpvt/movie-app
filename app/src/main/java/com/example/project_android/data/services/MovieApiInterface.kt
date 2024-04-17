@@ -1,14 +1,22 @@
 package com.example.project_android.data.services
 
+import com.example.project_android.data.models.entity.FavoriteRequest
 import com.example.project_android.data.models.entity.Movie
+import com.example.project_android.data.models.entity.RatingRequest
 import com.example.project_android.data.models.network.AccountStateResponse
+import com.example.project_android.data.models.network.BaseResponse
 import com.example.project_android.data.models.network.CastResponse
 import com.example.project_android.data.models.network.MovieResponse
+import com.example.project_android.data.models.network.RatingResponse
 import com.example.project_android.data.models.network.ReviewResponse
 import com.example.project_android.data.models.network.VideoResponse
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -57,4 +65,13 @@ interface MovieApiInterface {
     //Check Account State
     @GET("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/account_states?api_key=${TheMovieDatabaseAPI.API_KEY}")
     fun checkAccountState(@Path("movie_id") id : String, @Query("session_id") sessionId : String) : Call<AccountStateResponse>
+
+    //Add Rating
+    @Headers("Content-Type: application/json;charset=utf-8")
+    @POST("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/rating?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun addRating(@Path("movie_id") id : String, @Query("session_id") sessionID : String, @Body ratingRequest: RatingRequest) : Call<RatingResponse>
+
+    //Delete Rating
+    @DELETE("${TheMovieDatabaseAPI.API_VERSION}/movie/{movie_id}/rating?api_key=${TheMovieDatabaseAPI.API_KEY}")
+    fun deleteRating(@Path("movie_id") id : String, @Query("session_id") sessionID : String) : Call<BaseResponse>
 }
