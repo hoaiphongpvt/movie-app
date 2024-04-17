@@ -1,9 +1,9 @@
 package com.example.project_android.data.models.network
 
 import android.os.Parcelable
-import com.example.project_android.data.models.entity.Rated
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class AccountStateResponse(
@@ -13,10 +13,7 @@ data class AccountStateResponse(
     @SerializedName("id")
     val id: Int,
 
-//    @SerializedName("rated")
-//    val rated: Rated,
-//
-//    @SerializedName("watchlist")
-//    val watchlist: Boolean
+    @SerializedName("rated")
+    val rated: @RawValue Any? = false,
 
-) : Parcelable
+    ) : Parcelable

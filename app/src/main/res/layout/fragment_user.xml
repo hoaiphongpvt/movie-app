@@ -80,11 +80,11 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/watchlist"
+            android:id="@+id/btnRatedMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_button"
-            android:text="Watch list" />
+            android:text="Rated Movies" />
 
         <Button
             android:id="@+id/btnFavoriteMovies"
