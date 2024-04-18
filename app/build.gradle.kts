@@ -81,6 +81,9 @@ dependencies {
     //Rating Dialog
     implementation("com.codemybrainsout.rating:ratingdialog:2.0.0")
 
+    //Loading animation
+    implementation("com.github.Marvel999:Android-Loading-Animation:1.0.0")
+
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")

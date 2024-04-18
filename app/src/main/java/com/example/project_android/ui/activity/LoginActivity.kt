@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = LoginViewModel(this)
 
-
         btnLogin.setOnClickListener {
             if (username.text.isNotEmpty() && password.text.isNotEmpty()) {
                 loginViewModel.login(username.text.toString(), password.text.toString()) { result, sessionID ->
