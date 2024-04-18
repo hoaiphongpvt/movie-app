@@ -3,7 +3,6 @@ package com.example.project_android.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.project_android.R
-import com.example.project_android.ui.fragment.DownloadsFragment
 import com.example.project_android.ui.fragment.HomeFragment
 import com.example.project_android.ui.fragment.SearchFragment
 import com.example.project_android.ui.fragment.UserFragment
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener { menuItem ->
             val fragment = when (menuItem.itemId) {
                 R.id.bottomSearch -> SearchFragment()
-                R.id.bottomDownloads -> DownloadsFragment()
                 R.id.bottomUser -> UserFragment()
                 else -> HomeFragment()
             }

@@ -73,8 +73,11 @@ dependencies {
     //GG Login
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
-    //FB Login
-    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
+    //Custom Dialog 1
+    implementation("com.github.gabriel-TheCode:AestheticDialogs:1.3.8")
+
+    //Rating Dialog
+    implementation("com.codemybrainsout.rating:ratingdialog:2.0.0")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
