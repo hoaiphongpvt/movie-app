@@ -65,7 +65,7 @@ class VideoDetailsActivity : AppCompatActivity() {
         val webSettings = displayYoutubeVideo.settings
         webSettings.javaScriptEnabled = true
         displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8")
-
+//Gọi hàm load quảng cáo
         adsServices.loadBanner(mAdView,this)
     }
 }
