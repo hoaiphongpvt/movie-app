@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_android.R
-import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Credit
 import com.example.project_android.data.models.entity.Image
 import com.example.project_android.viewmodel.CastDetailsViewModel

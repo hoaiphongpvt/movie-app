@@ -31,7 +31,6 @@ class CreditsListAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         )
     }
-
     override fun getItemCount(): Int = credits.size
 
     override fun onBindViewHolder(holder: CreditsListViewHolder, position: Int) {

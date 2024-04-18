@@ -15,7 +15,6 @@ class ImageListAdapter (
 ) : RecyclerView.Adapter<ImageListAdapter.ImageListViewHolder>()  {
     class ImageListViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val BASE_IMG = TheMovieDatabaseAPI.BASE_IMG
-
         private val imageCast: ImageView = view.findViewById(R.id.image)
 
         fun bindImg(image: Image) {

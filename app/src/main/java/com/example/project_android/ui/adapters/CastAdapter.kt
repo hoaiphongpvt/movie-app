@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Cast
-import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
 
 class CastAdapter (
@@ -38,7 +37,5 @@ class CastAdapter (
             onItemClick(casts.get(position))
         }
     }
-
     override fun getItemCount(): Int = casts.size
-
 }

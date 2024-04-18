@@ -26,12 +26,12 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     callback(response.body()?.movie ?: emptyList())
                 } else {
-                    // Xử lý khi lấy dữ liệu thất bại
+                    callback(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                // Xử lý khi gọi API thất bại
+                callback(emptyList())
             }
         })
     }

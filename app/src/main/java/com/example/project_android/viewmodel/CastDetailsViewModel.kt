@@ -27,7 +27,7 @@ class CastDetailsViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<Person>, t: Throwable) {
-                TODO("Not yet implemented")
+                callback(null)
             }
         })
     }
@@ -49,7 +49,7 @@ class CastDetailsViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<PersonImageResponse>, t: Throwable) {
-
+                callback(emptyList())
             }
         })
     }
@@ -71,6 +71,7 @@ class CastDetailsViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<PersonCreditResponse>, t: Throwable) {
+                callback(emptyList())
             }
         })
     }

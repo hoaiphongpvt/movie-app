@@ -1,6 +1,5 @@
 package com.example.project_android.data.services
 
-import com.example.project_android.data.models.entity.FavoriteRequest
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.entity.RatingRequest
 import com.example.project_android.data.models.network.AccountStateResponse

@@ -52,7 +52,7 @@ class MovieDetailsViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<CastResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+               callback(emptyList())
             }
 
         })
@@ -69,7 +69,7 @@ class MovieDetailsViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                callback(emptyList())
             }
         })
      }

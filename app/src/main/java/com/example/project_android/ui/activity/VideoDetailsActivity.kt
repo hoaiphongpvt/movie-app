@@ -1,11 +1,7 @@
 package com.example.project_android.ui.activity
 
 import android.os.Bundle
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.webkit.WebChromeClient;
-import android.widget.FrameLayout;
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
