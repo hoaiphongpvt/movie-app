@@ -4,14 +4,19 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+data class YTVideo(
+    @SerializedName("items")
+    val items: List<YoutubeItem>
+)
+
 @Parcelize
-data class Video(
-    @SerializedName("id")
-    var id: String? = null,
+data class YoutubeItem(
+    @SerializedName("snippet")
+    val snippet: Snippet
+) : Parcelable
 
-    @SerializedName("key")
-    var key: String? = null,
-
-    @SerializedName("name")
-    var name: String? = null,
+@Parcelize
+data class Snippet(
+    @SerializedName("description")
+    val description: String
 ) : Parcelable
