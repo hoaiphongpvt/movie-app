@@ -7,6 +7,19 @@
     android:background="@color/black"
     tools:context=".ui.activity.MovieDetailsActivity">
 
+    <com.example.loadinganimation.LoadingAnimation
+        android:id="@+id/loadingAnim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:visibility="visible"
+        app:barType="@drawable/rainbow_ring"
+        app:boldText="false"
+        app:enlarge="2"
+        app:textColor="@color/white"
+        app:textSize="15sp"
+        android:background="@color/black"/>
+
     <include layout="@layout/toolbar" />
 
     <ImageView

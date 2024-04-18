@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.codemybrainsout.ratingdialog.RatingDialog
+import com.example.loadinganimation.LoadingAnimation
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
@@ -59,13 +60,14 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var recommendRecyclerView: RecyclerView
     private lateinit var reviewRecyclerView: RecyclerView
     private var sessionID: String? = null
+    private lateinit var loadingAnim: LoadingAnimation
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
+        loadingAnim = findViewById(R.id.loadingAnim)
         movieDetailsViewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
         userViewModel = UserViewModel(this)
-
         titlePage = findViewById(R.id.titlePage)
         backButton = findViewById(R.id.backButton)
         movieBackground = findViewById(R.id.movie_background)
@@ -84,6 +86,16 @@ class MovieDetailsActivity : AppCompatActivity() {
         videoRecyclerView = findViewById(R.id.videosRecyclerView)
         recommendRecyclerView = findViewById(R.id.recommendRecyclerview)
         reviewRecyclerView = findViewById(R.id.reviewRecyclerview)
+
+        var completedRequests = 0
+        val totalRequests = 5
+
+        fun checkAllRequestsCompleted() {
+            completedRequests++
+            if (completedRequests == totalRequests) {
+                loadingAnim.visibility = View.GONE // Ẩn loadingAnim khi tất cả request đã hoàn thành
+            }
+        }
 
         val movieID = intent.getStringExtra("movieID")
         sessionID = intent.getStringExtra("sessionID")
@@ -106,24 +118,29 @@ class MovieDetailsActivity : AppCompatActivity() {
                     backButton.setOnClickListener {
                         onBackPressed()
                     }
+                    checkAllRequestsCompleted()
                 }
             }
 
             movieDetailsViewModel.getListCastsData(movieID) { casts: List<Cast> ->
                 setupCastAdapter(castRecyclerView, casts)
+                checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getListVideosData(movieID) { videos: List<Video> ->
                 setupVideoAdapter(videoRecyclerView, videos)
+                checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getListRecommendMovies(movieID) {movies : List<Movie> ->
                 setupMovieAdapter(recommendRecyclerView, movies)
+                checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getReviews(movieID) { reviews: List<Review>, total: Int ->
                 totalReviews.text = "(${total})"
                 setupReviewAdapter(reviewRecyclerView, reviews)
+                checkAllRequestsCompleted()
 
             }
 
@@ -261,7 +278,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             } else {
                 btnFav.visibility = View.GONE
                 btnRate.visibility = View.GONE
