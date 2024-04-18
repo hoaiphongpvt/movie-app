@@ -13,6 +13,7 @@ import com.example.project_android.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.example.loadinganimation.LoadingAnimation
 import com.example.project_android.ui.adapters.MovieAdapter
 import com.example.project_android.ui.adapters.MovieBannerAutoScroll
 import com.example.project_android.data.models.entity.Movie
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var sessionId : String? = null
     private var guestSessionId : String? = null
+    private lateinit var loadingAnim: LoadingAnimation
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,6 +61,18 @@ class HomeFragment : Fragment() {
         val btnShowAllUpcoming : ImageButton = requireView().findViewById(R.id.showAllUpcoming)
         val btnShowAllTopRated : ImageButton = requireView().findViewById(R.id.showAllTopRated)
 
+        loadingAnim = requireView().findViewById(R.id.loadingAnim)
+
+        var completedRequests = 0
+        val totalRequests = 4
+
+        fun checkAllRequestsCompleted() {
+            completedRequests++
+            if (completedRequests == totalRequests) {
+                loadingAnim.visibility = View.GONE // Ẩn loadingAnim khi tất cả request đã hoàn thành
+            }
+        }
+
         btnShowAllPopular.setOnClickListener {
             homeViewModel.getMovieData("popular") { movies ->
                 goToShowAll("popular", movies)
@@ -86,14 +100,17 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getMovieData("popular") { movies: List<Movie> ->
             setupMovieAdapter(movieList, movies)
+            checkAllRequestsCompleted()
         }
 
         homeViewModel.getMovieData("upcoming") { movies: List<Movie> ->
             setupMovieAdapter(movieListUpcoming, movies)
+            checkAllRequestsCompleted()
         }
 
         homeViewModel.getMovieData("topRated") { movies: List<Movie> ->
             setupMovieAdapter(movieListTopRated, movies)
+            checkAllRequestsCompleted()
         }
 
         homeViewModel.getMovieData("trending") { movies: List<Movie> ->
@@ -117,6 +134,7 @@ class HomeFragment : Fragment() {
                     handler.post(update)
                 }
             }, 1000, 4000)
+            checkAllRequestsCompleted()
         }
     }
 
