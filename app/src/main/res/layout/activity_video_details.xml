@@ -26,7 +26,7 @@
         android:padding="16dp"
         android:text="Video Title"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@id/guideline_bottom"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/mWebView"
@@ -38,12 +38,12 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:textColor="@android:color/white"
+        android:gravity="start"
         android:textSize="18sp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@id/video_description"
-        app:layout_constraintStart_toStartOf="@id/mWebView"
-        app:layout_constraintTop_toBottomOf="@id/video_title"
-        app:layout_constraintEnd_toEndOf="@+id/mWebView"
-        android:layout_marginRight="20dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/video_title" />
 
     <FrameLayout
         android:id="@+id/description_frame"
@@ -69,9 +69,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:padding="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:alpha="0.8"
+                    android:textSize="14sp" />
 
             </ScrollView>
 
