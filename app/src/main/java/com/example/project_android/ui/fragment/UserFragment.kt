@@ -2,6 +2,7 @@ package com.example.project_android.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,18 @@ import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import com.example.project_android.ui.activity.LoginActivity
 import com.example.project_android.ui.activity.ShowAllActivity
 import com.example.project_android.viewmodel.UserViewModel
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 
 
 class UserFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var btnLogout : Button
-    private lateinit var btnWatchList: Button
+    private lateinit var btnRatedMovies: Button
     private lateinit var btnFavoriteMovies: Button
     private lateinit var name: TextView
     private lateinit var username: TextView
@@ -43,12 +49,11 @@ class UserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         userViewModel = UserViewModel(requireContext())
         btnLogout = requireView().findViewById(R.id.btnLogout)
-        btnWatchList = requireView().findViewById(R.id.watchlist)
+        btnRatedMovies = requireView().findViewById(R.id.btnRatedMovies)
         btnFavoriteMovies = requireView().findViewById(R.id.btnFavoriteMovies)
         name = requireView().findViewById(R.id.name)
         username = requireView().findViewById(R.id.username)
         avatar = requireView().findViewById(R.id.avatar)
-
 
         if (arguments?.getString("sessionId")?.isNotEmpty() == true) {
             sessionId = arguments?.getString("sessionId")
@@ -66,6 +71,9 @@ class UserFragment : Fragment() {
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                 }
             }
+        } else {
+            btnRatedMovies.visibility = View.GONE
+            btnFavoriteMovies.visibility = View.GONE
         }
 
 
@@ -80,23 +88,36 @@ class UserFragment : Fragment() {
 
         //Log out
         btnLogout.setOnClickListener {
-            if (!sessionId.isNullOrEmpty()) {
-                userViewModel.logout(sessionId!!) { result, msg ->
-                    if (result) {
-                        val intent = Intent(requireContext(), LoginActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+            val dialog = AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.WARNING)
+            dialog
+                .setTitle("Confirm Logout")
+                .setMessage("Do you want to log out?")
+                .setCancelable(true)
+                .setDarkMode(true)
+                .setGravity(Gravity.CENTER)
+                .setAnimation(DialogAnimation.SHRINK)
+                .setOnClickListener(object : OnDialogClickListener {
+                    override fun onClick(dialog: AestheticDialog.Builder) {
+                        if (!sessionId.isNullOrEmpty()) {
+                            userViewModel.logout(sessionId!!) { result, msg ->
+                                if (result) {
+                                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        } else if (!guestSessionId.isNullOrEmpty()) {
+                            userViewModel.logoutGoogle { success ->
+                                if (success) {
+                                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
+                        }
                     }
-                }
-            } else if (!guestSessionId.isNullOrEmpty()) {
-                userViewModel.logoutGoogle { success ->
-                    if (success) {
-                        val intent = Intent(requireContext(), LoginActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
+                })
+                .show()
         }
 
 
@@ -107,12 +128,21 @@ class UserFragment : Fragment() {
                 }
             }
         }
+
+        btnRatedMovies.setOnClickListener {
+            userViewModel.getRatedMovie(20938610, sessionId!!) {ratedMovies ->
+                if (ratedMovies != null) {
+                    goToShowAll("ratedMovie", ratedMovies.movie)
+                }
+            }
+        }
     }
 
     private fun goToShowAll(type: String, movies: List<Movie>) {
         val intent = Intent(requireContext(), ShowAllActivity::class.java)
         intent.putExtra("type", type)
         intent.putExtra("movies", ArrayList(movies))
+        intent.putExtra("sessionID", sessionId)
         startActivity(intent)
     }
 }

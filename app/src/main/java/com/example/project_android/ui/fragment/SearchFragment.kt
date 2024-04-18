@@ -27,6 +27,8 @@ class SearchFragment : Fragment() {
     private lateinit var searchViewModel : SearchViewModel
     private lateinit var txtResult: TextView
     private lateinit var searchResultsRecyclerview : RecyclerView
+    private var sessionId : String? = null
+    private var guestSessionId : String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +47,12 @@ class SearchFragment : Fragment() {
         searchResultsRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         searchResultsRecyclerview.setHasFixedSize(true)
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+
+        if (arguments?.getString("sessionId")?.isNotEmpty() == true) {
+            sessionId = arguments?.getString("sessionId")
+        } else if(arguments?.getString("guestSessionId")?.isNotEmpty() == true) {
+            guestSessionId = arguments?.getString("guestSessionId")
+        }
 
         btnSearch.setOnClickListener {
             //Hide keyboard
@@ -70,6 +78,7 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = SearchResultsAdapter(movies) { movie ->
             val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
             intent.putExtra("movieID", movie.id.toString())
+            intent.putExtra("sessionID", sessionId)
             startActivity(intent)
         }
     }

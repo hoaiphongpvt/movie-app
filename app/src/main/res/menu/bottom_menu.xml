@@ -11,11 +11,6 @@
         android:icon="@drawable/ic_search" />
 
     <item
-        android:title="Downloads"
-        android:id="@+id/bottomDownloads"
-        android:icon="@drawable/ic_download" />
-
-    <item
         android:title="User"
         android:id="@+id/bottomUser"
         android:icon="@drawable/ic_user" />
