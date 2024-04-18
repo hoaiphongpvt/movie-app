@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.WebChromeClient;
+import android.widget.FrameLayout;
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,13 +43,10 @@ class VideoDetailsActivity : AppCompatActivity() {
         val frameVideo =
             "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; border: none; } </style></head><body><iframe src=\"https://www.youtube.com/embed/$videoID\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
 
-        val displayYoutubeVideo = findViewById<WebView>(R.id.mWebView)
-        displayYoutubeVideo.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                view?.loadUrl(request?.url.toString())
-                return true
-            }
-        }
+        val YoutubeVideo = findViewById<WebView>(R.id.mWebView)
+
+        YoutubeVideo.loadUrl("https://www.youtube.com/embed/$videoID");
+
         if (videoID != null) {
             videoViewModel.getVideoData(videoID) { videoDetails ->
                 if (videoDetails != null) {
@@ -59,9 +58,6 @@ class VideoDetailsActivity : AppCompatActivity() {
             videoDescription.text = "Description not Available"
         }
 
-        val webSettings = displayYoutubeVideo.settings
-        webSettings.javaScriptEnabled = true
-        displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8")
         //Gọi hàm load quảng cáo
         adsServices.loadBanner(mAdView,this)
 
@@ -69,4 +65,5 @@ class VideoDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
+
 }

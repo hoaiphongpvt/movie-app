@@ -75,6 +75,8 @@ dependencies {
 
     //Custom Dialog 1
     implementation("com.github.gabriel-TheCode:AestheticDialogs:1.3.8")
+    //Full Screen Video
+    implementation ("com.github.RachitShah02:Webview-Video-Fullscreen:1.0.2")
 
     //Rating Dialog
     implementation("com.codemybrainsout.rating:ratingdialog:2.0.0")
