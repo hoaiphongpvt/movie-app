@@ -1,7 +1,6 @@
 package com.example.project_android.ui.activity
 
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -9,12 +8,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.project_android.R
-import com.example.project_android.data.remote.YoutubeDataAPI
-import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import com.example.project_android.data.services.AdsServices
-import com.example.project_android.viewmodel.CastDetailsViewModel
 import com.google.android.gms.ads.AdView
 import com.example.project_android.viewmodel.VideoViewModel
 
@@ -26,6 +21,7 @@ class VideoDetailsActivity : AppCompatActivity() {
     private lateinit var videoDescription: TextView
     private lateinit var mAdView: AdView
     private val adsServices = AdsServices(this)
+    private lateinit var btnBack : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +36,7 @@ class VideoDetailsActivity : AppCompatActivity() {
         videoDescription = findViewById(R.id.video_description)
         titlePage.text = videoName
         mAdView = findViewById(R.id.adView)
+        btnBack = findViewById(R.id.backButton)
 
         val frameVideo =
             "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; border: none; } </style></head><body><iframe src=\"https://www.youtube.com/embed/$videoID\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
@@ -65,7 +62,11 @@ class VideoDetailsActivity : AppCompatActivity() {
         val webSettings = displayYoutubeVideo.settings
         webSettings.javaScriptEnabled = true
         displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8")
-//Gọi hàm load quảng cáo
+        //Gọi hàm load quảng cáo
         adsServices.loadBanner(mAdView,this)
+
+        btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
