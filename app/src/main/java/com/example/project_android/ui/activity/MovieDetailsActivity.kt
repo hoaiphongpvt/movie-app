@@ -23,6 +23,7 @@ import com.example.project_android.data.models.entity.Cast
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.models.entity.Review
 import com.example.project_android.data.models.entity.Video
+import com.example.project_android.data.remote.TheMovieDatabaseAPI
 import com.example.project_android.data.remote.TheMovieDatabaseAPI.BASE_IMG
 import com.example.project_android.ui.adapters.CastAdapter
 import com.example.project_android.ui.adapters.MovieAdapter
@@ -61,6 +62,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var reviewRecyclerView: RecyclerView
     private var sessionID: String? = null
     private lateinit var loadingAnim: LoadingAnimation
+    private val accountID = TheMovieDatabaseAPI.ACCOUNT_ID
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -229,7 +231,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
                         btnFav.setOnCheckedChangeListener { buttonView, isChecked ->
                             if (isChecked) {
-                                userViewModel.addMovieToFavoriteList(20938610,
+                                userViewModel.addMovieToFavoriteList(accountID,
                                     sessionID!!, movieID) { result, msg ->
                                     if (result) {
                                         AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
@@ -252,7 +254,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                                     }
                                 }
                             } else {
-                                userViewModel.deleteMovieToFavoriteList(20938610,
+                                userViewModel.deleteMovieToFavoriteList(accountID,
                                     sessionID!!, movieID) { result, msg ->
                                     if (result) {
                                         AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)

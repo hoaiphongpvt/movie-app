@@ -26,8 +26,8 @@ class CreditsListAdapter(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditsListAdapter.CreditsListViewHolder {
-        return CreditsListAdapter.CreditsListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditsListViewHolder {
+        return CreditsListViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         )
     }

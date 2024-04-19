@@ -22,8 +22,8 @@ class ImageListAdapter (
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListAdapter.ImageListViewHolder {
-        return ImageListAdapter.ImageListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
+        return ImageListViewHolder(
             LayoutInflater  .from(parent.context).inflate(R.layout.image_item, parent, false)
         )
     }

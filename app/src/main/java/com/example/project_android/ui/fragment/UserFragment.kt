@@ -36,6 +36,7 @@ class UserFragment : Fragment() {
     private lateinit var avatar: ImageView
     private  var sessionId : String? = null
     private var guestSessionId : String? = null
+    private val accountID = TheMovieDatabaseAPI.ACCOUNT_ID
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +63,7 @@ class UserFragment : Fragment() {
         }
 
         if (sessionId != null) {
-            userViewModel.getUserDetails(20938610, sessionId!!) { user, msg ->
+            userViewModel.getUserDetails(accountID, sessionId!!) { user, msg ->
                 if (user != null) {
                     name.text = user.name
                     username.text = user.username
@@ -122,7 +123,7 @@ class UserFragment : Fragment() {
 
 
         btnFavoriteMovies.setOnClickListener {
-            userViewModel.getFavoriteMovie(20938610, sessionId!!) {favoriteMovies ->
+            userViewModel.getFavoriteMovie(accountID, sessionId!!) {favoriteMovies ->
                 if (favoriteMovies != null) {
                     goToShowAll("favoriteMovie", favoriteMovies.movie)
                 }
@@ -130,7 +131,7 @@ class UserFragment : Fragment() {
         }
 
         btnRatedMovies.setOnClickListener {
-            userViewModel.getRatedMovie(20938610, sessionId!!) {ratedMovies ->
+            userViewModel.getRatedMovie(accountID, sessionId!!) {ratedMovies ->
                 if (ratedMovies != null) {
                     goToShowAll("ratedMovie", ratedMovies.movie)
                 }
