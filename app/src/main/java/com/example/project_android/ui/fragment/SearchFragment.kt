@@ -3,6 +3,7 @@ package com.example.project_android.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,11 @@ import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.ui.activity.MovieDetailsActivity
 import com.example.project_android.ui.adapters.SearchResultsAdapter
 import com.example.project_android.viewmodel.SearchViewModel
+import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogAnimation
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
+import com.thecode.aestheticdialogs.OnDialogClickListener
 
 class SearchFragment : Fragment() {
 
@@ -54,6 +60,30 @@ class SearchFragment : Fragment() {
             guestSessionId = arguments?.getString("guestSessionId")
         }
 
+        fun getResults(query : String) {
+            searchViewModel.searchMovie(query) { movies ->
+                if (movies.isNotEmpty()) {
+                    txtResult.text = "Results for '${query}'"
+                    setupSearchResultsAdapter(searchResultsRecyclerview, movies)
+                }
+                else {
+                    txtResult.text = null
+                    AestheticDialog.Builder(requireActivity(), DialogStyle.EMOTION, DialogType.WARNING)
+                        .setTitle("Warning")
+                        .setMessage("There are no movies with this name!!!")
+                        .setDarkMode(true)
+                        .setGravity(Gravity.CENTER)
+                        .setAnimation(DialogAnimation.SHRINK)
+                        .setOnClickListener(object : OnDialogClickListener {
+                            override fun onClick(dialog: AestheticDialog.Builder) {
+                                dialog.dismiss()
+                            }
+                        })
+                        .show()
+                }
+            }
+        }
+
         btnSearch.setOnClickListener {
             //Hide keyboard
             val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -61,16 +91,22 @@ class SearchFragment : Fragment() {
 
             val query = txtQuery.text.toString()
             if (query.isNotEmpty()) {
-                txtResult.text = "Results for '${txtQuery.text}'"
                 getResults(query)
                 txtQuery.text = null
+            } else {
+                AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.WARNING)
+                    .setTitle("Warning")
+                    .setMessage("Please enter a name!")
+                    .setDarkMode(true)
+                    .setGravity(Gravity.CENTER)
+                    .setAnimation(DialogAnimation.SHRINK)
+                    .setOnClickListener(object : OnDialogClickListener {
+                        override fun onClick(dialog: AestheticDialog.Builder) {
+                            dialog.dismiss()
+                        }
+                    })
+                    .show()
             }
-        }
-    }
-
-    private fun getResults(query : String) {
-        searchViewModel.searchMovie(query) { movies ->
-            setupSearchResultsAdapter(searchResultsRecyclerview, movies)
         }
     }
 
