@@ -177,7 +177,11 @@ class MovieDetailsActivity : AppCompatActivity() {
                                     .title(R.string.submit_feedback)
                                     .onThresholdCleared { dialog, rating, thresholdCleared ->  ratingValue = rating}
                                     .onThresholdFailed { dialog, rating, thresholdCleared ->  ratingValue = rating }
-                                    .positiveButton(text = R.string.ok_text, textColor = R.color.black, background = R.drawable.rounded_corner) {dialog ->
+                                    .negativeButton(text = R.string.rating_dialog_cancel, textColor = R.color.starColor, background = R.drawable.rounded_corner) { dialog ->
+                                        btnRate.isChecked = false
+                                        dialog.dismiss()
+                                    }
+                                    .positiveButton(text = R.string.ok_text, textColor = R.color.starColor, background = R.drawable.rounded_corner) {dialog ->
                                         movieDetailsViewModel.addRating(movieID, sessionID!!, ratingValue ) {result, msg ->
                                             if (result) {
                                                 AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
@@ -193,12 +197,13 @@ class MovieDetailsActivity : AppCompatActivity() {
                                                         }
                                                     })
                                                     .show()
-                                                    btnRate.text = "Rated ${ratingValue.toInt()} ⭐"
-                                                    btnRate.setBackgroundResource(R.color.starColor)
-                                                } else {
-                                                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-                                                }
+                                                btnRate.isChecked = true
+                                                btnRate.text = "Rated ${ratingValue.toInt()} ⭐"
+                                                btnRate.setBackgroundResource(R.color.starColor)
+                                            } else {
+                                                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
                                             }
+                                        }
                                         dialog.dismiss()
                                     }
                                     .build()

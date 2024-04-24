@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.loadinganimation.LoadingAnimation
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.data.remote.TheMovieDatabaseAPI
@@ -37,6 +38,7 @@ class UserFragment : Fragment() {
     private  var sessionId : String? = null
     private var guestSessionId : String? = null
     private val accountID = TheMovieDatabaseAPI.ACCOUNT_ID
+    private lateinit var loadingAnim: LoadingAnimation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,12 +64,15 @@ class UserFragment : Fragment() {
             guestSessionId = arguments?.getString("guestSessionId")
         }
 
+        loadingAnim = requireView().findViewById(R.id.loadingAnim)
+
         if (sessionId != null) {
             userViewModel.getUserDetails(accountID, sessionId!!) { user, msg ->
                 if (user != null) {
                     name.text = user.name
                     username.text = user.username
                     Glide.with(avatar).load(TheMovieDatabaseAPI.BASE_PROFILE_URL + user.avatar.tmdb.avatar_path).into(avatar)
+                    loadingAnim.visibility = View.GONE
                 } else {
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                 }
@@ -84,6 +89,7 @@ class UserFragment : Fragment() {
                 name.text = user.displayName
                 username.text = user.email
                 Glide.with(avatar).load(user.photoUrl).into(avatar)
+                loadingAnim.visibility = View.GONE
             }
         }
 
