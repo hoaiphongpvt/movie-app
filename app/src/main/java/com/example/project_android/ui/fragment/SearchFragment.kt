@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.loadinganimation.LoadingAnimation
 import com.example.project_android.R
 import com.example.project_android.data.models.entity.Movie
 import com.example.project_android.ui.activity.MovieDetailsActivity
@@ -35,6 +36,7 @@ class SearchFragment : Fragment() {
     private lateinit var searchResultsRecyclerview : RecyclerView
     private var sessionId : String? = null
     private var guestSessionId : String? = null
+    private lateinit var loadingAnim: LoadingAnimation
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +55,8 @@ class SearchFragment : Fragment() {
         searchResultsRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         searchResultsRecyclerview.setHasFixedSize(true)
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-
+        loadingAnim = requireView().findViewById(R.id.loadingAnim)
+        loadingAnim.visibility = View.GONE
         if (arguments?.getString("sessionId")?.isNotEmpty() == true) {
             sessionId = arguments?.getString("sessionId")
         } else if(arguments?.getString("guestSessionId")?.isNotEmpty() == true) {
@@ -65,8 +68,10 @@ class SearchFragment : Fragment() {
                 if (movies.isNotEmpty()) {
                     txtResult.text = "Results for '${query}'"
                     setupSearchResultsAdapter(searchResultsRecyclerview, movies)
+                    loadingAnim.visibility = View.GONE
                 }
                 else {
+                    loadingAnim.visibility = View.GONE
                     txtResult.text = null
                     AestheticDialog.Builder(requireActivity(), DialogStyle.EMOTION, DialogType.WARNING)
                         .setTitle("Warning")
@@ -88,12 +93,13 @@ class SearchFragment : Fragment() {
             //Hide keyboard
             val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-
+            loadingAnim.visibility = View.VISIBLE
             val query = txtQuery.text.toString()
             if (query.isNotEmpty()) {
                 getResults(query)
                 txtQuery.text = null
             } else {
+                loadingAnim.visibility = View.GONE
                 AestheticDialog.Builder(requireActivity(), DialogStyle.FLAT, DialogType.WARNING)
                     .setTitle("Warning")
                     .setMessage("Please enter a name!")
