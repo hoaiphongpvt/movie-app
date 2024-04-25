@@ -31,6 +31,8 @@ class UserViewModel(private val context: Context) : ViewModel() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
 
+
+
     fun logout(sessionID: String, callback: (Boolean, String?) -> Unit) {
         val sessionIdRequest = SessionIdRequest(sessionID)
         apiAuthService.deleteSession(sessionIdRequest).enqueue(object : Callback<SuccessResponse> {
