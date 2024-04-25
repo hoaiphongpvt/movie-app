@@ -39,7 +39,6 @@ import com.thecode.aestheticdialogs.DialogType
 import com.thecode.aestheticdialogs.OnDialogClickListener
 
 class MovieDetailsActivity : AppCompatActivity() {
-
     private lateinit var movieDetailsViewModel: MovieDetailsViewModel
     private lateinit var userViewModel : UserViewModel
     private lateinit var titlePage : TextView
@@ -90,12 +89,12 @@ class MovieDetailsActivity : AppCompatActivity() {
         reviewRecyclerView = findViewById(R.id.reviewRecyclerview)
 
         var completedRequests = 0
-        val totalRequests = 5
+        val totalRequests = 6
 
         fun checkAllRequestsCompleted() {
             completedRequests++
             if (completedRequests == totalRequests) {
-                loadingAnim.visibility = View.GONE // Ẩn loadingAnim khi tất cả request đã hoàn thành
+                loadingAnim.visibility = View.GONE
             }
         }
 
@@ -177,7 +176,12 @@ class MovieDetailsActivity : AppCompatActivity() {
                                     .ratingBarColor(R.color.starColor)
                                     .title(R.string.submit_feedback)
                                     .onThresholdCleared { dialog, rating, thresholdCleared ->  ratingValue = rating}
-                                    .positiveButton(text = R.string.ok_text, textColor = R.color.black, background = R.drawable.rounded_corner) {dialog ->
+                                    .onThresholdFailed { dialog, rating, thresholdCleared ->  ratingValue = rating }
+                                    .negativeButton(text = R.string.rating_dialog_cancel, textColor = R.color.starColor, background = R.drawable.rounded_corner) { dialog ->
+                                        btnRate.isChecked = false
+                                        dialog.dismiss()
+                                    }
+                                    .positiveButton(text = R.string.ok_text, textColor = R.color.starColor, background = R.drawable.rounded_corner) {dialog ->
                                         movieDetailsViewModel.addRating(movieID, sessionID!!, ratingValue ) {result, msg ->
                                             if (result) {
                                                 AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.SUCCESS)
@@ -193,7 +197,8 @@ class MovieDetailsActivity : AppCompatActivity() {
                                                         }
                                                     })
                                                     .show()
-                                                btnRate.text = "Rated"
+                                                btnRate.isChecked = true
+                                                btnRate.text = "Rated ${ratingValue.toInt()} ⭐"
                                                 btnRate.setBackgroundResource(R.color.starColor)
                                             } else {
                                                 Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
@@ -202,7 +207,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                                         dialog.dismiss()
                                     }
                                     .build()
-
                                 ratingDialog.show()
                             } else {
                                 movieDetailsViewModel.deleteRating(movieID, sessionID!!) { result, msg ->
@@ -280,9 +284,11 @@ class MovieDetailsActivity : AppCompatActivity() {
                         }
                     }
                 }
+                checkAllRequestsCompleted()
             } else {
                 btnFav.visibility = View.GONE
                 btnRate.visibility = View.GONE
+                checkAllRequestsCompleted()
             }
         }
     }
