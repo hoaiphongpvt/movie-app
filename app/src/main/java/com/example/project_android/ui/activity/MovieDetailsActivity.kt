@@ -56,9 +56,13 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var overviewText: TextView
     private lateinit var totalReviews: TextView
     private lateinit var castRecyclerView: RecyclerView
+    private lateinit var castText: TextView
     private lateinit var videoRecyclerView: RecyclerView
+    private lateinit var videoText: TextView
     private lateinit var recommendRecyclerView: RecyclerView
+    private lateinit var reviewText: TextView
     private lateinit var reviewRecyclerView: RecyclerView
+    private lateinit var recommendText: TextView
     private var sessionID: String? = null
     private lateinit var loadingAnim: LoadingAnimation
     private val accountID = TheMovieDatabaseAPI.ACCOUNT_ID
@@ -84,9 +88,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         overviewText = findViewById(R.id.overviewText)
         totalReviews = findViewById(R.id.totalReviews)
         castRecyclerView = findViewById(R.id.castRecyclerView)
+        castText = findViewById(R.id.castText)
         videoRecyclerView = findViewById(R.id.videosRecyclerView)
+        videoText = findViewById(R.id.watchTrailerText)
         recommendRecyclerView = findViewById(R.id.recommendRecyclerview)
+        recommendText = findViewById(R.id.recommendText)
         reviewRecyclerView = findViewById(R.id.reviewRecyclerview)
+        reviewText = findViewById(R.id.reviewText)
 
         var completedRequests = 0
         val totalRequests = 6
@@ -124,25 +132,40 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
 
             movieDetailsViewModel.getListCastsData(movieID) { casts: List<Cast> ->
-                setupCastAdapter(castRecyclerView, casts)
+                if (casts.isNotEmpty()) {
+                    setupCastAdapter(castRecyclerView, casts)
+                } else {
+                    castText.text = "No information about casts"
+                }
                 checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getListVideosData(movieID) { videos: List<Video> ->
-                setupVideoAdapter(videoRecyclerView, videos)
+                if (videos.isNotEmpty()) {
+                    setupVideoAdapter(videoRecyclerView, videos)
+                } else {
+                    videoText.text = "No Videos"
+                }
                 checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getListRecommendMovies(movieID) {movies : List<Movie> ->
-                setupMovieAdapter(recommendRecyclerView, movies)
+                if (movies.isNotEmpty()) {
+                    setupMovieAdapter(recommendRecyclerView, movies)
+                } else {
+                    recommendText.text = ""
+                }
                 checkAllRequestsCompleted()
             }
 
             movieDetailsViewModel.getReviews(movieID) { reviews: List<Review>, total: Int ->
-                totalReviews.text = "(${total})"
-                setupReviewAdapter(reviewRecyclerView, reviews)
+                if (total != 0) {
+                    totalReviews.text = "(${total})"
+                    setupReviewAdapter(reviewRecyclerView, reviews)
+                } else {
+                    reviewText.text = "No Reviews"
+                }
                 checkAllRequestsCompleted()
-
             }
 
             if (sessionID != null) {
