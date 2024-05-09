@@ -11,7 +11,7 @@ import com.example.project_android.data.services.AuthenApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-class LoginViewModel(private val context: Context) : ViewModel(){
+class LoginViewModel1(private val context: Context) : ViewModel(){
 
     private val apiService = ApiServices.getInstance().create(AuthenApiInterface::class.java)
     fun login(username: String, password: String, callback: (Boolean, String) -> Unit) {
